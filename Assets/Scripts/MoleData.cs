@@ -10,5 +10,7 @@ public class MoleData : ScriptableObject
 
     public float timeOnScreen;
 
-    public Color color;	
+    public Color color;
+
+    public float spawnTime;
 }

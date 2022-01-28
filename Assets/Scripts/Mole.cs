@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 
 public class Mole : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class Mole : MonoBehaviour
     public void Respawn(Vector2 pos, MoleData d)
     {
         data = d;
+
+        data.spawnTime = Time.time;
 
         gameObject.GetComponent<RectTransform>().position = pos;
         gameObject.SetActive(true);
@@ -46,6 +49,7 @@ public class Mole : MonoBehaviour
     /// </summary>
     public void MoleClicked()
     {
+        Debug.Log("TIME : " + Time.time);
         StopCoroutine("Timer");
         OnMoleDied(this, true);
         Despawn();

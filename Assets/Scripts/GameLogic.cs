@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameLogic : MonoBehaviour
@@ -63,6 +64,12 @@ public class GameLogic : MonoBehaviour
 
     public Animator animatorCombo;
 
+    private List<float> timeKillList;
+
+    private float meanTimeKill;
+
+    public bool verbose = true;
+
     private void Awake()
     {
         // Listen to all the moles' click event.
@@ -97,6 +104,27 @@ public class GameLogic : MonoBehaviour
             score.UpdateCombo(pointsCombo);
             animatorCombo.SetTrigger("comboTrigger");
             score.UpdateAccurcy(true);
+
+            
+            timeKillList.RemoveAt(0);
+            timeKillList.Add(Time.time - mole.data.spawnTime);
+            meanTimeKill = Queryable.Average(timeKillList.AsQueryable()); ;
+
+            if (verbose)
+            {
+                Debug.Log("--------------------");
+                Debug.Log("Moment d'apparition de la cible : " + mole.data.spawnTime);
+                Debug.Log("Moment de destruction de la cible : " + Time.time);
+                Debug.Log("timeToKill : " + (Time.time - mole.data.spawnTime));
+
+                for (int i = 0; i < timeKillList.Count; i++)
+                {
+                    Debug.Log("Valeur de timeKillList[" + i + "] : " + timeKillList[i]);
+                }
+
+                Debug.Log("Valeur de meanTimeKill : " + meanTimeKill);
+            }
+
         }
 
         SpawnImmediate();
@@ -117,6 +145,14 @@ public class GameLogic : MonoBehaviour
 
         points = 0;
         currentMolesOnScreen = 0;
+
+        timeKillList = new List<float>();
+        for (int i = 0; i < 10; ++i)
+        {
+            timeKillList.Add(0f);
+        }
+
+        meanTimeKill = 0f;
 
         StartCoroutine("SpawnMoles");
         SpawnImmediate();

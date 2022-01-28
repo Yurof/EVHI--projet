@@ -67,8 +67,8 @@ public class RandomLocation : MonoBehaviour
                 return new Vector2(Mathf.RoundToInt(gazePosition.x) - Screen.width / 3, Random.Range(0, Screen.height));
             }
         }
-        Debug.Log("x 3: " + Random.Range(0, halfWidth));
-        Debug.Log("y 3: " + Random.Range(0, halfHeight));
+/*        Debug.Log("x 3: " + Random.Range(0, halfWidth));
+        Debug.Log("y 3: " + Random.Range(0, halfHeight));*/
         return new Vector2
         {
             x = Random.Range(0, Screen.width),
