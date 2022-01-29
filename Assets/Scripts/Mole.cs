@@ -49,7 +49,6 @@ public class Mole : MonoBehaviour
     /// </summary>
     public void MoleClicked()
     {
-        Debug.Log("TIME : " + Time.time);
         StopCoroutine("Timer");
         OnMoleDied(this, true);
         Despawn();

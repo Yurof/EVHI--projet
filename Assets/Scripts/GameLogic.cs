@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
+
 
 public class GameLogic : MonoBehaviour
 {
@@ -68,7 +70,20 @@ public class GameLogic : MonoBehaviour
 
     private float meanTimeKill;
 
+
+    private float targetMinSize;
+    private float targetMaxSize;
+    private float targetMinDuration;
+    private float targetMaxDuration;
+
+    private float targetSize;
+    private float targetDuration;
+
+    private System.Random rnd = new System.Random();
+
     public bool verbose = true;
+
+
 
     private void Awake()
     {
@@ -90,6 +105,8 @@ public class GameLogic : MonoBehaviour
     /// </summary>
     /// <param name="mole"></param>
     /// <param name="clicked"></param>
+    /// 
+    /* Increase or decrease either duration or size of the targets whether target was clicked on*/
     private void MoleDied(Mole mole, bool clicked)
     {
         location.FreeLocation(mole);
@@ -98,8 +115,8 @@ public class GameLogic : MonoBehaviour
 
         if (clicked)
         {
-            points += mole.data.points;
-            pointsCombo += mole.data.points;
+            points += 1;
+            pointsCombo += 1;
             score.UpdateScore(points);
             score.UpdateCombo(pointsCombo);
             animatorCombo.SetTrigger("comboTrigger");
@@ -109,7 +126,7 @@ public class GameLogic : MonoBehaviour
             timeKillList.RemoveAt(0);
             timeKillList.Add(Time.time - mole.data.spawnTime);
             meanTimeKill = Queryable.Average(timeKillList.AsQueryable()); ;
-
+/*
             if (verbose)
             {
                 Debug.Log("--------------------");
@@ -123,8 +140,43 @@ public class GameLogic : MonoBehaviour
                 }
 
                 Debug.Log("Valeur de meanTimeKill : " + meanTimeKill);
+            }*/
+            if (rnd.Next(2) == 1)
+            {
+                if (verbose)
+                {
+                    Debug.Log("Target duration decreased");
+                }
+                targetDuration = Math.Max(targetDuration * 0.9f, targetMinDuration);
             }
-
+            else
+            {
+                if (verbose)
+                {
+                    Debug.Log("Target size decreased");
+                }
+                targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
+            }
+            
+        }
+        else
+        {
+            if (rnd.Next(2) == 1)
+            {
+                if (verbose)
+                {
+                    Debug.Log("Target duration increased");
+                }
+                targetDuration = Math.Min(targetDuration * 1.1f, targetMaxDuration);
+            }
+            else
+            {
+                if (verbose)
+                {
+                    Debug.Log("Target size increased");
+                }
+                targetSize = Math.Min(targetSize * 1.1f, targetMaxSize);
+            }
         }
 
         SpawnImmediate();
@@ -153,6 +205,15 @@ public class GameLogic : MonoBehaviour
         }
 
         meanTimeKill = 0f;
+
+
+        targetMinSize = 1f;
+        targetMaxSize = 2f;
+        targetMinDuration = 1f;
+        targetMaxDuration = 3f;
+
+        targetSize = 1.5f;
+        targetDuration = 2f;
 
         StartCoroutine("SpawnMoles");
         SpawnImmediate();
@@ -204,7 +265,7 @@ public class GameLogic : MonoBehaviour
     /// <returns></returns>
     private MoleData RandomMole()
     {
-        return moleData[Random.Range(0, 3)];
+        return new MoleData {size = targetSize, timeOnScreen = targetDuration };
     }
 
     public void ResetCombo()
