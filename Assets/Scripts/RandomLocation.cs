@@ -60,11 +60,26 @@ public class RandomLocation : MonoBehaviour
             Debug.Log(Mathf.RoundToInt(gazePosition.x));
             if (gazePosition.x < Screen.width / 2)
             {
-                return new Vector2(Mathf.RoundToInt(gazePosition.x) + Screen.width / 3, Random.Range(0, Screen.height));
+                if(gazePosition.y < Screen.height / 2)
+                {
+                    return new Vector2(Random.Range(Screen.width / 2, Screen.width), Random.Range(Screen.height / 2, Screen.height));
+                }
+                else
+                {
+                    return new Vector2(Random.Range(Screen.width / 2, Screen.width), Random.Range(0, Screen.height / 2));
+                }
+                
             }
             else
             {
-                return new Vector2(Mathf.RoundToInt(gazePosition.x) - Screen.width / 3, Random.Range(0, Screen.height));
+                if (gazePosition.y < Screen.height / 2)
+                {
+                    return new Vector2(Random.Range(0, Screen.width / 2), Random.Range(Screen.height / 2, Screen.height));
+                }
+                else
+                {
+                    return new Vector2(Random.Range(0, Screen.width / 2), Random.Range(0, Screen.height / 2));
+                }
             }
         }
 /*        Debug.Log("x 3: " + Random.Range(0, halfWidth));
