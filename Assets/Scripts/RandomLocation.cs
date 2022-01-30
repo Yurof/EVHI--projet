@@ -31,9 +31,9 @@ public class RandomLocation : MonoBehaviour
         reservedLocation.Clear();
     }
 
-    public Vector2 FindLocation(Mole m)
+    public Vector2 FindLocation(Mole m, float fittDist)
     {
-        Vector2 random = GetRandom();
+        Vector2 random = GetRandom(fittDist);
 
         // number of attempt to find a non-overlaping location
         int numOfAttempts = 0;
@@ -41,7 +41,7 @@ public class RandomLocation : MonoBehaviour
         // if number of attempts reaches 25, just return an overlaping location this time.
         while (CheckOverlap(m, random) == false && numOfAttempts < 25)
         {
-            random = GetRandom();
+            random = GetRandom(fittDist);
             numOfAttempts++;
         }
 
@@ -50,7 +50,7 @@ public class RandomLocation : MonoBehaviour
         return random;
     }
 
-    private Vector2 GetRandom()
+    private Vector2 GetRandom(float fittDist)
     {
         GazePoint gazePoint = TobiiAPI.GetGazePoint();
         if (gazePoint.IsValid)

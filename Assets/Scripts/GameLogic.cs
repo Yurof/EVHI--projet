@@ -68,8 +68,11 @@ public class GameLogic : MonoBehaviour
 
     private List<float> timeKillList;
 
+    private float oldMeanTimeKill;
     private float meanTimeKill;
-
+    private float fittDist;
+    private float a = 10f;
+    private float b = 100f;
 
     private float targetMinSize;
     private float targetMaxSize;
@@ -125,7 +128,12 @@ public class GameLogic : MonoBehaviour
             
             timeKillList.RemoveAt(0);
             timeKillList.Add(Time.time - mole.data.spawnTime);
-            meanTimeKill = Queryable.Average(timeKillList.AsQueryable()); ;
+            oldMeanTimeKill = meanTimeKill;
+            meanTimeKill = Queryable.Average(timeKillList.AsQueryable());
+
+            fittDist = targetSize * ((float)Math.Pow(2, (meanTimeKill - a) / b) - 1);
+
+
 /*
             if (verbose)
             {
@@ -141,7 +149,8 @@ public class GameLogic : MonoBehaviour
 
                 Debug.Log("Valeur de meanTimeKill : " + meanTimeKill);
             }*/
-            if (rnd.Next(2) == 1)
+
+            if (meanTimeKill - oldMeanTimeKill <= 0)
             {
                 if (verbose)
                 {
@@ -153,30 +162,32 @@ public class GameLogic : MonoBehaviour
             {
                 if (verbose)
                 {
-                    Debug.Log("Target size decreased");
-                }
-                targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
-            }
-            
-        }
-        else
-        {
-            if (rnd.Next(2) == 1)
-            {
-                if (verbose)
-                {
                     Debug.Log("Target duration increased");
                 }
                 targetDuration = Math.Min(targetDuration * 1.1f, targetMaxDuration);
             }
-            else
+
+            if (verbose)
             {
-                if (verbose)
-                {
-                    Debug.Log("Target size increased");
-                }
-                targetSize = Math.Min(targetSize * 1.1f, targetMaxSize);
+                Debug.Log("Target size decreased");
             }
+            targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
+
+            
+        }
+        else
+        {
+            if (verbose)
+            {
+                Debug.Log("Target duration increased");
+            }
+            targetDuration = Math.Min(targetDuration * 1.1f, targetMaxDuration);
+
+            if (verbose)
+            {
+                Debug.Log("Target size increased");
+            }
+            targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
         }
 
         SpawnImmediate();
@@ -204,6 +215,7 @@ public class GameLogic : MonoBehaviour
             timeKillList.Add(0f);
         }
 
+        oldMeanTimeKill = 0f;
         meanTimeKill = 0f;
 
 
@@ -237,7 +249,7 @@ public class GameLogic : MonoBehaviour
         {
             if (currentMolesOnScreen < moles.Length && disabledMoles.Count > 0)
             {
-                disabledMoles[0].Respawn(location.FindLocation(disabledMoles[0]), RandomMole());
+                disabledMoles[0].Respawn(location.FindLocation(disabledMoles[0], fittDist), RandomMole());
                 disabledMoles.RemoveAt(0);
                 currentMolesOnScreen++;
             }
@@ -253,7 +265,7 @@ public class GameLogic : MonoBehaviour
     {
         while (currentMolesOnScreen < 1 && disabledMoles.Count > 0)
         {
-            disabledMoles[0].Respawn(location.FindLocation(disabledMoles[0]), RandomMole());
+            disabledMoles[0].Respawn(location.FindLocation(disabledMoles[0], fittDist), RandomMole());
             disabledMoles.RemoveAt(0);
             currentMolesOnScreen++;
         }
