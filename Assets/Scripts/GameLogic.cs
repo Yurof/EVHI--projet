@@ -63,7 +63,7 @@ public class GameLogic : MonoBehaviour
 
     private System.Random rnd = new System.Random();
 
-    public bool verbose = true;
+    public bool verbose = false;
 
     private void Awake()
     {
@@ -95,15 +95,12 @@ public class GameLogic : MonoBehaviour
             score.UpdateScore(points);
             score.UpdateCombo(pointsCombo);
             animatorCombo.SetTrigger("comboTrigger");
-            score.UpdateAccurcy(true);
 
-            timeKillList.RemoveAt(0);
             timeKillList.Add(Time.time - mole.data.spawnTime);
             oldMeanTimeKill = meanTimeKill;
             meanTimeKill = Queryable.Average(timeKillList.AsQueryable());
 
             fittDist = targetSize * ((float)Math.Pow(2, (meanTimeKill - a) / b) - 1);
-
 
 /*
             if (verbose)
@@ -151,23 +148,31 @@ public class GameLogic : MonoBehaviour
         else
         {
             ResetCombo();
-            if (verbose)
-            {
-                Debug.Log("Target duration increased");
-            }
-            targetDuration = Math.Min(targetDuration * 1.1f, targetMaxDuration);
+            timeKillList.Add(targetMaxDuration);
+            oldMeanTimeKill = meanTimeKill;
+            meanTimeKill = Queryable.Average(timeKillList.AsQueryable());
 
-            if (verbose)
+            if (rnd.Next(2) == 1)
             {
-                Debug.Log("Target size increased");
+                if (verbose)
+                {
+                    Debug.Log("Target duration increased");
+                }
+                targetDuration = Math.Min(targetDuration * 1.1f, targetMaxDuration);
             }
-            targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
+            else
+            {
+                if (verbose)
+                {
+                    Debug.Log("Target size increased");
+                }
+                targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
+            }
         }
 
         score.UpdateAccurcy(clicked);
         Debug.Log("Died");
 
-        SpawnImmediate();
     }
 
     public void NewGame()
@@ -187,10 +192,6 @@ public class GameLogic : MonoBehaviour
         currentMolesOnScreen = 0;
 
         timeKillList = new List<float>();
-        for (int i = 0; i < 10; ++i)
-        {
-            timeKillList.Add(0f);
-        }
 
         oldMeanTimeKill = 0f;
         meanTimeKill = 0f;
@@ -213,6 +214,7 @@ public class GameLogic : MonoBehaviour
         StopCoroutine("SpawnMoles");
         ui.GameOver();
         score.GameOver(points);
+        ResetCombo();
     }
 
     /// Coroutine to spawn a new mole every time interval.
@@ -253,6 +255,5 @@ public class GameLogic : MonoBehaviour
         animatorCombo.SetTrigger("breakerTrigger");
         pointsCombo = 0;
         score.UpdateCombo(pointsCombo);
-        score.UpdateAccurcy(false);
     }
 }

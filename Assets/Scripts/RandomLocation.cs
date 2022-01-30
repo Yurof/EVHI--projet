@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Tobii.Gaming;
+using System;
 
 public class RandomLocation : MonoBehaviour
 {
@@ -15,6 +16,15 @@ public class RandomLocation : MonoBehaviour
     private float halfHeight;
 
     private const float MoleRadius = 50.0f;
+
+    private Vector2 topRightCenter = new Vector2(Screen.width * 0.75f, Screen.height * 0.75f);
+    private Vector2 topLeftCenter = new Vector2(Screen.width * 0.25f, Screen.height * 0.75f);
+    private Vector2 bottomRightCenter = new Vector2(Screen.width * 0.75f, Screen.height * 0.25f);
+    private Vector2 bottomLeftCenter = new Vector2(Screen.width * 0.25f, Screen.height * 0.25f);
+
+    public float horizontalRandomisedValue = Screen.width / 20;
+    public float verticalRandomisedValue = Screen.height / 10;
+
 
     private void Start()
     {
@@ -48,6 +58,8 @@ public class RandomLocation : MonoBehaviour
 
     private Vector2 GetRandom(float fittDist)
     {
+        Vector2 resPos;
+        Vector2 vect;
         GazePoint gazePoint = TobiiAPI.GetGazePoint();
         if (gazePoint.IsValid)
         {
@@ -58,11 +70,27 @@ public class RandomLocation : MonoBehaviour
             {
                 if(gazePosition.y < Screen.height / 2)
                 {
-                    return new Vector2(Random.Range(Screen.width / 2, Screen.width), Random.Range(Screen.height / 2, Screen.height));
+
+
+                    vect = new Vector2(topRightCenter.x - gazePosition.x , topRightCenter.y - gazePosition.y);
+                    vect = fittDist * vect.normalized;
+                    resPos = gazePosition + vect;
+                    if(resPos.x >= Screen.width || resPos.y >= Screen.height)
+                    {
+                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(Screen.height / 2, Screen.height));
+                    }
+                    /*return new Vector2(Random.Range(Screen.width / 2, Screen.width), Random.Range(Screen.height / 2, Screen.height));*/
                 }
                 else
                 {
-                    return new Vector2(Random.Range(Screen.width / 2, Screen.width), Random.Range(0, Screen.height / 2));
+                    vect = new Vector2(bottomRightCenter.x - gazePosition.x, topRightCenter.y - gazePosition.y);
+                    vect = fittDist * vect.normalized;
+                    resPos = gazePosition + vect;
+                    if (resPos.x >= Screen.width || resPos.y >= Screen.height)
+                    {
+                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(Screen.height / 2, Screen.height));
+                    }
+                    /*return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(0, Screen.height / 2));*/
                 }
                 
             }
@@ -70,20 +98,43 @@ public class RandomLocation : MonoBehaviour
             {
                 if (gazePosition.y < Screen.height / 2)
                 {
-                    return new Vector2(Random.Range(0, Screen.width / 2), Random.Range(Screen.height / 2, Screen.height));
+                    vect = new Vector2(topLeftCenter.x - gazePosition.x, topRightCenter.y - gazePosition.y);
+                    vect = fittDist * vect.normalized;
+                    resPos = gazePosition + vect;
+                    if (resPos.x >= Screen.width || resPos.y >= Screen.height)
+                    {
+                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(Screen.height / 2, Screen.height));
+                    }
+                    /*return new Vector2(UnityEngine.Random.Range(0, Screen.width / 2), UnityEngine.Random.Range(Screen.height / 2, Screen.height));*/
                 }
                 else
                 {
-                    return new Vector2(Random.Range(0, Screen.width / 2), Random.Range(0, Screen.height / 2));
+                    vect = new Vector2(bottomLeftCenter.x - gazePosition.x, topRightCenter.y - gazePosition.y);
+                    vect = fittDist * vect.normalized;
+                    resPos = gazePosition + vect;
+                    if (resPos.x >= Screen.width || resPos.y >= Screen.height)
+                    {
+                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(Screen.height / 2, Screen.height));
+                    }
+                    /*return new Vector2(UnityEngine.Random.Range(0, Screen.width / 2), UnityEngine.Random.Range(0, Screen.height / 2));*/
                 }
             }
+            do
+            {
+                resPos.x += UnityEngine.Random.Range(-horizontalRandomisedValue, horizontalRandomisedValue);
+                resPos.y += UnityEngine.Random.Range(-verticalRandomisedValue, verticalRandomisedValue);
+            } while (resPos.x >= Screen.width || resPos.x <= 0 || resPos.y >= Screen.height || resPos.y <= 0);
+
+            Debug.Log("Position du regarde : " + gazePosition);
+            Debug.Log("Position de la cible : " + resPos);
+            return resPos;
         }
         /*        Debug.Log("x 3: " + Random.Range(0, halfWidth));
                 Debug.Log("y 3: " + Random.Range(0, halfHeight));*/
         return new Vector2
         {
-            x = Random.Range(0, Screen.width),
-            y = Random.Range(0, Screen.height)
+            x = UnityEngine.Random.Range(0, Screen.width),
+            y = UnityEngine.Random.Range(0, Screen.height)
         };
     }
 

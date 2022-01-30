@@ -64,6 +64,7 @@ public class Score : MonoBehaviour
     {
         finalScoreText.text = s.ToString();
         touchedTarget = 0;
+        Debug.Log("MISSED TARGET REMIS A 0");
         missedTarget = 0;
         accuracyText.text = zero;
         SaveData(s);
