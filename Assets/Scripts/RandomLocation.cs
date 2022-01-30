@@ -8,14 +8,10 @@ public class RandomLocation : MonoBehaviour
 
     private Dictionary<Mole, Vector2> reservedLocation = new Dictionary<Mole, Vector2>();
 
-    /// <summary>
     /// half the width of the screen.
-    /// </summary>
     private float halfWidth;
 
-    /// <summary>
     /// half the height of the screen.
-    /// </summary>
     private float halfHeight;
 
     private const float MoleRadius = 50.0f;
@@ -56,8 +52,8 @@ public class RandomLocation : MonoBehaviour
         if (gazePoint.IsValid)
         {
             Vector2 gazePosition = gazePoint.Screen;
-            Debug.Log(Screen.width);
-            Debug.Log(Mathf.RoundToInt(gazePosition.x));
+            /*            Debug.Log(Screen.width);
+                        Debug.Log(Mathf.RoundToInt(gazePosition.x));*/
             if (gazePosition.x < Screen.width / 2)
             {
                 if(gazePosition.y < Screen.height / 2)
@@ -82,8 +78,8 @@ public class RandomLocation : MonoBehaviour
                 }
             }
         }
-/*        Debug.Log("x 3: " + Random.Range(0, halfWidth));
-        Debug.Log("y 3: " + Random.Range(0, halfHeight));*/
+        /*        Debug.Log("x 3: " + Random.Range(0, halfWidth));
+                Debug.Log("y 3: " + Random.Range(0, halfHeight));*/
         return new Vector2
         {
             x = Random.Range(0, Screen.width),

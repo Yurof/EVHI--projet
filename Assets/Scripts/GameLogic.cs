@@ -4,64 +4,43 @@ using System.Linq;
 using UnityEngine;
 using System;
 
-
 public class GameLogic : MonoBehaviour
 {
-    /// <summary>
+    public AudioSource hitaudio;
+
     /// The moles in the scene.
-    /// </summary>
     public Mole[] moles;
 
-    /// <summary>
     /// All the mole types, MoleData is a scriptable object.
-    /// </summary>
     public MoleData[] moleData;
 
-    /// <summary>
     /// The time interval to spawn a new mole.
-    /// </summary>
     public float spawnTimer;
 
-    /// <summary>
     /// Score handles the score and display it.
-    /// </summary>
     public Score score;
 
-    /// <summary>
     /// Timer handels the game round time and riase an event when time is up to indicate the end of the round.
-    /// </summary>
     public Timer timer;
 
-    /// <summary>
     /// Changes the game ui state from "gameplay" to "menu" and viseversa.
-    /// </summary>
     public GameUI ui;
 
-    /// <summary>
     /// Location is responable for choosing a random location to spawn the mole at.
-    /// </summary>
     public RandomLocation location;
 
-    /// <summary>
     /// The number of moles currently on screen.
-    /// </summary>
     private int currentMolesOnScreen;
 
-    /// <summary>
     /// The current score of an active game round.
-    /// </summary>
     private int points;
 
     private int pointsCombo;
 
-    /// <summary>
     /// All the disabled mole. we use one of them when we need to spawn a new mole.
-    /// </summary>
     private List<Mole> disabledMoles = new List<Mole>();
 
-    /// <summary>
     /// Wait time used to spawning coroutine.
-    /// </summary>
     private WaitForSeconds wait;
 
     public Animator animatorCombo;
@@ -86,8 +65,6 @@ public class GameLogic : MonoBehaviour
 
     public bool verbose = true;
 
-
-
     private void Awake()
     {
         // Listen to all the moles' click event.
@@ -102,14 +79,8 @@ public class GameLogic : MonoBehaviour
         wait = new WaitForSeconds(spawnTimer);
     }
 
-    /// <summary>
     /// Call back when a mole was clicked.
     /// if clicked is true. the mole was actually click and we need to add to the score.
-    /// </summary>
-    /// <param name="mole"></param>
-    /// <param name="clicked"></param>
-    /// 
-    /* Increase or decrease either duration or size of the targets whether target was clicked on*/
     private void MoleDied(Mole mole, bool clicked)
     {
         location.FreeLocation(mole);
@@ -118,6 +89,7 @@ public class GameLogic : MonoBehaviour
 
         if (clicked)
         {
+            hitaudio.Play();
             points += 1;
             pointsCombo += 1;
             score.UpdateScore(points);
@@ -125,7 +97,6 @@ public class GameLogic : MonoBehaviour
             animatorCombo.SetTrigger("comboTrigger");
             score.UpdateAccurcy(true);
 
-            
             timeKillList.RemoveAt(0);
             timeKillList.Add(Time.time - mole.data.spawnTime);
             oldMeanTimeKill = meanTimeKill;
@@ -144,8 +115,10 @@ public class GameLogic : MonoBehaviour
 
                 for (int i = 0; i < timeKillList.Count; i++)
                 {
-                    Debug.Log("Valeur de timeKillList[" + i + "] : " + timeKillList[i]);
-                }
+                    Debug.Log("--------------------");
+                    Debug.Log("Moment d'apparition de la cible : " + mole.data.spawnTime);
+                    Debug.Log("Moment de destruction de la cible : " + Time.time);
+                    Debug.Log("timeToKill : " + (Time.time - mole.data.spawnTime));
 
                 Debug.Log("Valeur de meanTimeKill : " + meanTimeKill);
             }*/
@@ -177,6 +150,7 @@ public class GameLogic : MonoBehaviour
         }
         else
         {
+            ResetCombo();
             if (verbose)
             {
                 Debug.Log("Target duration increased");
@@ -189,6 +163,9 @@ public class GameLogic : MonoBehaviour
             }
             targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
         }
+
+        score.UpdateAccurcy(clicked);
+        Debug.Log("Died");
 
         SpawnImmediate();
     }
@@ -218,7 +195,6 @@ public class GameLogic : MonoBehaviour
         oldMeanTimeKill = 0f;
         meanTimeKill = 0f;
 
-
         targetMinSize = 1f;
         targetMaxSize = 2f;
         targetMinDuration = 1f;
@@ -239,10 +215,7 @@ public class GameLogic : MonoBehaviour
         score.GameOver(points);
     }
 
-    /// <summary>
     /// Coroutine to spawn a new mole every time interval.
-    /// </summary>
-    /// <returns></returns>
     private IEnumerator SpawnMoles()
     {
         while (true)
@@ -258,9 +231,7 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Spawn moles immediatly to make sure at least 5 moles are on screen.
-    /// </summary>
+    /// Spawn moles immediatly to make sure at least 1 moles are on screen.
     private void SpawnImmediate()
     {
         while (currentMolesOnScreen < 1 && disabledMoles.Count > 0)
@@ -271,13 +242,10 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    /// <summary>
     /// Picks a random scriptable object for the mole's data.
-    /// </summary>
-    /// <returns></returns>
     private MoleData RandomMole()
     {
-        return new MoleData {size = targetSize, timeOnScreen = targetDuration };
+        return new MoleData { size = targetSize, timeOnScreen = targetDuration };
     }
 
     public void ResetCombo()

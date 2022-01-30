@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Score : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class Score : MonoBehaviour
 
     private string zero = "0";
     private GameSave gameSave = new GameSave();
-    private List<int> topScores = new List<int>();
+    private List<int> ListScore = new List<int>();
+    private List<float> ListAccuracy = new List<float>();
 
     private int missedTarget = 0;
     private int touchedTarget = 0;
@@ -20,7 +22,7 @@ public class Score : MonoBehaviour
 
     private void Awake()
     {
-        topScores.AddRange(gameSave.Load());
+        ListScore.AddRange(gameSave.Load());
     }
 
     private void Start()
@@ -61,29 +63,31 @@ public class Score : MonoBehaviour
     public void GameOver(int s)
     {
         finalScoreText.text = s.ToString();
-
-        CheckNewHighScore(s);
+        touchedTarget = 0;
+        missedTarget = 0;
+        accuracyText.text = zero;
+        SaveData(s);
     }
 
-    private void CheckNewHighScore(int s)
+    private void SaveData(int s)
     {
-        if (s < topScores[0] || topScores.Contains(s))
-            return;
+        ListScore.Add(s);
+        ListAccuracy.Add(accuracy);
 
-        topScores[4] = s;
-        topScores.Sort();
-        topScores.Reverse();
-
-        gameSave.Save(topScores.ToArray());
-
+        gameSave.Save(ListScore.ToArray(), ListAccuracy.ToArray());
         ShowTopScores();
     }
 
     private void ShowTopScores()
     {
-        for (int i = 0; i < 1; i++)
+        topScoresText[0].text = Mathf.Max(ListScore.ToArray()).ToString();
+
+        float sum = 0;
+        for (var i = 0; i < ListAccuracy.Count; i++)
         {
-            topScoresText[i].text = topScores[i].ToString();
+            sum += ListAccuracy[i];
         }
+
+        topScoresText[1].text = (sum / ListAccuracy.Count).ToString("F2") + "%";
     }
 }

@@ -5,9 +5,7 @@ using System;
 
 public class Mole : MonoBehaviour
 {
-    /// <summary>
     /// Used to animate and scale the mole
-    /// </summary>
     public MoleVisuals visuals;
 
     public UnityAction<Mole, bool> OnMoleDied;
@@ -15,11 +13,7 @@ public class Mole : MonoBehaviour
     [HideInInspector]
     public MoleData data;
 
-    /// <summary>
     /// Spawn the mole at a given position.
-    /// </summary>
-    /// <param name="pos"> randon position to spawn at </param>
-    /// <param name="d"> data as a scriptable object </param>
     public void Respawn(Vector2 pos, MoleData d)
     {
         data = d;
@@ -44,9 +38,7 @@ public class Mole : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    /// <summary>
     /// Called when the mole is clicked.
-    /// </summary>
     public void MoleClicked()
     {
         StopCoroutine("Timer");
