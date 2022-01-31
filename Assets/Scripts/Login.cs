@@ -29,16 +29,13 @@ public class Login : MonoBehaviour
     public void PlayGame()
     {
         string text = playerName.GetComponent<TMP_InputField>().text;
-        Debug.Log(text);
 
-        if (!string.IsNullOrEmpty(text))
+        if (!string.IsNullOrEmpty(text) && text != "nul")
         {
             PlayerPrefs.SetString("name", text);
-            Debug.Log(Application.persistentDataPath + "/" + text + ".dat");
-            Debug.Log(File.Exists(Application.persistentDataPath + "/" + text + ".dat"));
+
             if (File.Exists(Application.persistentDataPath + "/" + text + ".dat"))
             {
-                Debug.Log("scene 2");
                 SceneManager.LoadScene(2);
             }
             else

@@ -20,7 +20,7 @@ public class Tutorial : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        Welcome.text = "Welcome " + PlayerPrefs.GetString("name");
+        Welcome.text = "Bienvenue " + PlayerPrefs.GetString("name");
 
         Invoke("WelcomeFunction", 2);
 
@@ -37,13 +37,12 @@ public class Tutorial : MonoBehaviour
 
     public void WelcomeFunction()
     {
-        Welcome.text = "Please click on my belly if you want to pass";
+        Welcome.text = "Clique sur mon ventre si tu veux passer";
         Invoke("NewGame", 1.5f);
     }
 
     public void NewGame()
     {
-        Destroy(Welcome);
         targetcat.SetActive(true);
     }
 
@@ -53,20 +52,20 @@ public class Tutorial : MonoBehaviour
         GazePoint gazePoint = TobiiAPI.GetGazePoint();
         if (gazePoint.IsValid)
         {
-            Debug.Log(gazePoint.Screen);
-            Debug.Log(Input.mousePosition);
             Vector2 clickPos = (Vector2)Input.mousePosition;
             Vector2 offset = clickPos - gazePoint.Screen;
             offsetx += offset.x;
             offsety += offset.y;
-            Debug.Log(offsetx);
-            Debug.Log(offsety);
         }
 
         if (i < listSpawn.Count)
         {
             targetcat.transform.position = listSpawn[i];
-            if (i == 1)
+            if (i == 0)
+            {
+                Destroy(Welcome);
+            }
+            else if (i == 1)
             {
                 targetcat.GetComponent<SpriteRenderer>().flipX = true;
             }

@@ -17,7 +17,6 @@ public class GameSave
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/" + PlayerPrefs.GetString("name") + ".dat");
-        //FileStream filePath = File.Create(Application.persistentDataPath + "/" + PlayerPrefs.GetString("name") + ".csv");
 
         GameData playerScore = new GameData();
         playerScore.scores = scores;
@@ -26,16 +25,10 @@ public class GameSave
 
         bf.Serialize(file, playerScore);
         file.Close();
-
-        /*        using (var writer = new StreamWriter(filePath))
-                {
-                    writer.Write("aaa");
-                }*/
     }
 
     public GameData Load()
     {
-        Debug.Log("Name Player" + PlayerPrefs.GetString("name"));
         if (File.Exists(Application.persistentDataPath + "/" + PlayerPrefs.GetString("name") + ".dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();

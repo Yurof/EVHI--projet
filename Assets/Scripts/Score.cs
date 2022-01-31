@@ -81,7 +81,6 @@ public class Score : MonoBehaviour
         {
             missedTarget += 1;
         }
-        Debug.Log(bol);
         accuracy = 100.0f * touchedTarget / (touchedTarget + missedTarget);
 
         accuracyText.text = (accuracy).ToString("F2") + "%";
@@ -99,7 +98,6 @@ public class Score : MonoBehaviour
         missedTarget = 0;
         accuracyText.text = "---";
         ListAccuracy.Add(accuracy);
-        Debug.Log("score mean " + scoremeanTimeKill);
         Listmeantimekill.Add(scoremeanTimeKill);
         SaveData(s);
     }
@@ -107,7 +105,6 @@ public class Score : MonoBehaviour
     private void SaveData(int s)
     {
         ListScore.Add(s);
-        Debug.Log("Saving accuracy");
         gameSave.Save(ListScore.ToArray(), ListAccuracy.ToArray(), Listmeantimekill.ToArray());
         ShowTopScores();
     }
@@ -116,10 +113,6 @@ public class Score : MonoBehaviour
     {
         topScoresText[0].text = Mathf.Max(ListScore.ToArray()).ToString();
 
-        for (var i = 0; i < ListAccuracy.Count; i++)
-        {
-            Debug.Log("ListAccuracy i " + ListAccuracy[i]);
-        }
         if (ListAccuracy.Count == 0)
         {
             topScoresText[1].text = "---";
@@ -129,10 +122,6 @@ public class Score : MonoBehaviour
             topScoresText[1].text = (Queryable.Average(ListAccuracy.AsQueryable())).ToString("F2") + "%";
         }
 
-        for (var i = 0; i < Listmeantimekill.Count; i++)
-        {
-            Debug.Log("Listmeantimekill i " + Listmeantimekill[i]);
-        }
         if (Listmeantimekill.Count == 0)
         {
             topScoresText[1].text = "---";

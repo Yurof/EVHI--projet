@@ -86,7 +86,6 @@ public class GameLogic : MonoBehaviour
         location.FreeLocation(mole);
         disabledMoles.Add(mole);
         currentMolesOnScreen--;
-        Debug.Log("click?" + clicked);
 
         if (clicked)
         {
@@ -101,28 +100,8 @@ public class GameLogic : MonoBehaviour
             timeKillList.Add(Time.time - mole.data.spawnTime);
             oldMeanTimeKill = meanTimeKill;
             meanTimeKill = Queryable.Average(timeKillList.AsQueryable());
-            Debug.Log("meanTimeKill" + meanTimeKill);
 
             fittDist = targetSize * ((float)Math.Pow(2, ((1 / meanTimeKill) - a) / b) - 1);
-            Debug.Log("fitz " + meanTimeKill + " " + a + " " + b + " " + fittDist);
-
-            /*
-                        if (verbose)
-                        {
-                            Debug.Log("--------------------");
-                            Debug.Log("Moment d'apparition de la cible : " + mole.data.spawnTime);
-                            Debug.Log("Moment de destruction de la cible : " + Time.time);
-                            Debug.Log("timeToKill : " + (Time.time - mole.data.spawnTime));
-
-                            for (int i = 0; i < timeKillList.Count; i++)
-                            {
-                                Debug.Log("--------------------");
-                                Debug.Log("Moment d'apparition de la cible : " + mole.data.spawnTime);
-                                Debug.Log("Moment de destruction de la cible : " + Time.time);
-                                Debug.Log("timeToKill : " + (Time.time - mole.data.spawnTime));
-
-                            Debug.Log("Valeur de meanTimeKill : " + meanTimeKill);
-                        }*/
 
             if (meanTimeKill - oldMeanTimeKill <= 0)
             {
@@ -179,9 +158,6 @@ public class GameLogic : MonoBehaviour
         score.NewGame();
         location.NewGame();
         disabledMoles.Clear();
-
-        Debug.Log("targetDuration" + targetDuration);
-        Debug.Log("targetSize" + targetSize);
 
         foreach (Mole m in moles)
         {
