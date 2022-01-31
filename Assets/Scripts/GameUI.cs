@@ -4,6 +4,7 @@ public class GameUI : MonoBehaviour
 {
     public GameObject playCanvas;
     public GameObject scoreCanvas;
+    public GameObject optionCanvas;
     public GameObject GazePlot;
 
     public void NewGame()
@@ -21,5 +22,17 @@ public class GameUI : MonoBehaviour
     public void ShowGaze()
     {
         GazePlot.SetActive(!GazePlot.activeInHierarchy);
+    }
+
+    public void OptionMenu()
+    {
+        scoreCanvas.SetActive(false);
+        optionCanvas.SetActive(true);
+    }
+
+    public void LeaveOptionMenu()
+    {
+        optionCanvas.SetActive(false);
+        scoreCanvas.SetActive(true);
     }
 }

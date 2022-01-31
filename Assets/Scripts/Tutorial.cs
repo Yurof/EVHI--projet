@@ -43,6 +43,7 @@ public class Tutorial : MonoBehaviour
 
     public void NewGame()
     {
+        Destroy(Welcome);
         targetcat.SetActive(true);
     }
 
@@ -61,11 +62,11 @@ public class Tutorial : MonoBehaviour
         if (i < listSpawn.Count)
         {
             targetcat.transform.position = listSpawn[i];
-            if (i == 0)
-            {
-                Destroy(Welcome);
-            }
-            else if (i == 1)
+            /*            if (i == 0)
+                        {
+                            Destroy(Welcome);
+                        }*/
+            if (i == 1)
             {
                 targetcat.GetComponent<SpriteRenderer>().flipX = true;
             }

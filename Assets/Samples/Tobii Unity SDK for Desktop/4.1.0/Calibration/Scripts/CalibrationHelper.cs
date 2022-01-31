@@ -208,10 +208,6 @@ namespace Tobii.Gaming.Examples.Calibration
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                StartCalibration();
-            }
         }
     }
 }
