@@ -53,13 +53,13 @@ public class GameLogic : MonoBehaviour
     private float a = 0f;
     private float b = 0.13f;
 
-    public float targetMinSize = 0.7f;
+    public float targetMinSize = 0.5f;
     public float targetMaxSize = 2f;
     public float targetMinDuration = 0.2f;
     public float targetMaxDuration = 3f;
 
-    private float targetSize = 1.5f;
-    private float targetDuration = 2f;
+    public float targetSize = 1.5f;
+    public float targetDuration = 2f;
 
     private System.Random rnd = new System.Random();
 
@@ -180,6 +180,9 @@ public class GameLogic : MonoBehaviour
         location.NewGame();
         disabledMoles.Clear();
 
+        Debug.Log("targetDuration" + targetDuration);
+        Debug.Log("targetSize" + targetSize);
+
         foreach (Mole m in moles)
         {
             m.Despawn();
@@ -202,9 +205,11 @@ public class GameLogic : MonoBehaviour
     private void GameOver()
     {
         StopCoroutine("SpawnMoles");
+        score.scoremeanTimeKill = meanTimeKill;
         ui.GameOver();
-        ResetCombo();
         score.GameOver(points);
+        pointsCombo = 0;
+        score.UpdateCombo(pointsCombo);
     }
 
     /// Coroutine to spawn a new mole every time interval.

@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class Score : MonoBehaviour
 {
@@ -11,18 +12,48 @@ public class Score : MonoBehaviour
     public Text finalScoreText;
     public Text[] topScoresText;
 
+    public GameLogic GameLogic;
+
     private string zero = "0";
     private GameSave gameSave = new GameSave();
     private List<int> ListScore = new List<int>();
     private List<float> ListAccuracy = new List<float>();
+    private List<float> Listmeantimekill = new List<float>();
 
     private int missedTarget = 0;
     private int touchedTarget = 0;
     private float accuracy = 0;
+    public float scoremeanTimeKill = 0;
+
+    private float accurateThreshold = 80f;
+    private float timeThreshold = 1f;
 
     private void Awake()
     {
-        ListScore.AddRange(gameSave.Load());
+        GameData gd = gameSave.Load();
+        if (gd != null)
+        {
+            ListScore.AddRange(gd.scores);
+            ListAccuracy.AddRange(gd.accuracies);
+            Listmeantimekill.AddRange(gd.meantimekills);
+            if (Queryable.Average(ListAccuracy.AsQueryable()) < accurateThreshold)
+            {
+                GameLogic.targetSize = 1.5f;
+            }
+            else
+            {
+                GameLogic.targetSize = 0.7f;
+            }
+
+            if (Queryable.Average(Listmeantimekill.AsQueryable()) < timeThreshold)
+            {
+                GameLogic.targetDuration = 1;
+            }
+            else
+            {
+                GameLogic.targetDuration = 2;
+            }
+        }
     }
 
     private void Start()
@@ -58,7 +89,7 @@ public class Score : MonoBehaviour
 
     public void NewGame()
     {
-        scoreText.text = zero;
+        scoreText.text = "0000";
     }
 
     public void GameOver(int s)
@@ -66,16 +97,18 @@ public class Score : MonoBehaviour
         finalScoreText.text = s.ToString();
         touchedTarget = 0;
         missedTarget = 0;
-        accuracyText.text = zero;
+        accuracyText.text = "---";
+        ListAccuracy.Add(accuracy);
+        Debug.Log("score mean " + scoremeanTimeKill);
+        Listmeantimekill.Add(scoremeanTimeKill);
         SaveData(s);
     }
 
     private void SaveData(int s)
     {
         ListScore.Add(s);
-        ListAccuracy.Add(accuracy);
-
-        gameSave.Save(ListScore.ToArray(), ListAccuracy.ToArray());
+        Debug.Log("Saving accuracy");
+        gameSave.Save(ListScore.ToArray(), ListAccuracy.ToArray(), Listmeantimekill.ToArray());
         ShowTopScores();
     }
 
@@ -83,12 +116,30 @@ public class Score : MonoBehaviour
     {
         topScoresText[0].text = Mathf.Max(ListScore.ToArray()).ToString();
 
-        float sum = 0;
         for (var i = 0; i < ListAccuracy.Count; i++)
         {
-            sum += ListAccuracy[i];
+            Debug.Log("ListAccuracy i " + ListAccuracy[i]);
+        }
+        if (ListAccuracy.Count == 0)
+        {
+            topScoresText[1].text = "---";
+        }
+        else
+        {
+            topScoresText[1].text = (Queryable.Average(ListAccuracy.AsQueryable())).ToString("F2") + "%";
         }
 
-        topScoresText[1].text = (sum / ListAccuracy.Count).ToString("F2") + "%";
+        for (var i = 0; i < Listmeantimekill.Count; i++)
+        {
+            Debug.Log("Listmeantimekill i " + Listmeantimekill[i]);
+        }
+        if (Listmeantimekill.Count == 0)
+        {
+            topScoresText[1].text = "---";
+        }
+        else
+        {
+            topScoresText[2].text = (Queryable.Average(Listmeantimekill.AsQueryable())).ToString("F2") + "s";
+        }
     }
 }

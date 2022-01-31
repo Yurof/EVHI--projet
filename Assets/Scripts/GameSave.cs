@@ -4,25 +4,25 @@ using System.IO;
 using System;
 
 [Serializable]
-internal class GameData
+public class GameData
 {
     public int[] scores;
     public float[] accuracies;
+    public float[] meantimekills;
 }
 
 public class GameSave
 {
-    public void Save(int[] scores, float[] accuracies)
+    public void Save(int[] scores, float[] accuracies, float[] meantimekills)
     {
         BinaryFormatter bf = new BinaryFormatter();
-
         FileStream file = File.Create(Application.persistentDataPath + "/" + PlayerPrefs.GetString("name") + ".dat");
         //FileStream filePath = File.Create(Application.persistentDataPath + "/" + PlayerPrefs.GetString("name") + ".csv");
-        Debug.Log(Application.persistentDataPath);
 
         GameData playerScore = new GameData();
         playerScore.scores = scores;
         playerScore.accuracies = accuracies;
+        playerScore.meantimekills = meantimekills;
 
         bf.Serialize(file, playerScore);
         file.Close();
@@ -33,18 +33,18 @@ public class GameSave
                 }*/
     }
 
-    public int[] Load()
+    public GameData Load()
     {
+        Debug.Log("Name Player" + PlayerPrefs.GetString("name"));
         if (File.Exists(Application.persistentDataPath + "/" + PlayerPrefs.GetString("name") + ".dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerScore.dat", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/" + PlayerPrefs.GetString("name") + ".dat", FileMode.Open);
             GameData playerScore = (GameData)bf.Deserialize(file);
             file.Close();
 
-            return playerScore.scores;
+            return playerScore;
         }
-
-        return new int[5];
+        return null;
     }
 }
