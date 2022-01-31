@@ -1166,7 +1166,6 @@ GameObject:
   - component: {fileID: 428353676}
   - component: {fileID: 428353675}
   - component: {fileID: 428353677}
-  - component: {fileID: 428353679}
   - component: {fileID: 428353680}
   m_Layer: 0
   m_Name: Game Logic
@@ -1292,19 +1291,6 @@ MonoBehaviour:
   screen: {fileID: 2066520344}
   horizontalRandomisedValue: 45
   verticalRandomisedValue: 49
---- !u!114 &428353679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428353672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14e7571f924cd174fb4c53a61340b354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crosshair: {fileID: 2800000, guid: 54956fd5a4a204345b1af586b2fdce21, type: 3}
 --- !u!114 &428353680
 MonoBehaviour:
   m_ObjectHideFlags: 0
