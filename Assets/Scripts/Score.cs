@@ -50,6 +50,7 @@ public class Score : MonoBehaviour
         {
             missedTarget += 1;
         }
+        Debug.Log(bol);
         accuracy = 100.0f * touchedTarget / (touchedTarget + missedTarget);
 
         accuracyText.text = (accuracy).ToString("F2") + "%";
@@ -64,7 +65,6 @@ public class Score : MonoBehaviour
     {
         finalScoreText.text = s.ToString();
         touchedTarget = 0;
-        Debug.Log("MISSED TARGET REMIS A 0");
         missedTarget = 0;
         accuracyText.text = zero;
         SaveData(s);

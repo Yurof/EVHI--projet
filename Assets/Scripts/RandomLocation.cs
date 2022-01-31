@@ -17,14 +17,10 @@ public class RandomLocation : MonoBehaviour
 
     private const float MoleRadius = 50.0f;
 
-    private Vector2 topRightCenter = new Vector2(Screen.width * 0.75f, Screen.height * 0.75f);
-    private Vector2 topLeftCenter = new Vector2(Screen.width * 0.25f, Screen.height * 0.75f);
-    private Vector2 bottomRightCenter = new Vector2(Screen.width * 0.75f, Screen.height * 0.25f);
-    private Vector2 bottomLeftCenter = new Vector2(Screen.width * 0.25f, Screen.height * 0.25f);
+    private Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
     public float horizontalRandomisedValue = Screen.width / 20;
     public float verticalRandomisedValue = Screen.height / 10;
-
 
     private void Start()
     {
@@ -68,65 +64,80 @@ public class RandomLocation : MonoBehaviour
                         Debug.Log(Mathf.RoundToInt(gazePosition.x));*/
             if (gazePosition.x < Screen.width / 2)
             {
-                if(gazePosition.y < Screen.height / 2)
+                if (gazePosition.y < Screen.height / 2)
                 {
-
-
-                    vect = new Vector2(topRightCenter.x - gazePosition.x , topRightCenter.y - gazePosition.y);
+                    //haut a droite
+                    vect = new Vector2(UnityEngine.Random.Range(0, Screen.width / 2), UnityEngine.Random.Range(0, Screen.height / 2));
+                    Debug.Log("vect" + vect + "normalised " + vect.normalized + "fitz" + fittDist);
                     vect = fittDist * vect.normalized;
-                    resPos = gazePosition + vect;
-                    if(resPos.x >= Screen.width || resPos.y >= Screen.height)
+                    Debug.Log("vectnormalised" + vect);
+                    resPos = screenCenter + vect;
+                    if (resPos.x >= Screen.width * 0.95f || resPos.y >= Screen.height * 0.95f || (resPos.x <= Screen.width * 0.05f || resPos.y <= Screen.height * 0.05f))
                     {
-                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(Screen.height / 2, Screen.height));
+                        Debug.Log("Out of screen !");
+                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width * 0.95f), UnityEngine.Random.Range(Screen.height / 2, Screen.height * 0.95f));
                     }
                     /*return new Vector2(Random.Range(Screen.width / 2, Screen.width), Random.Range(Screen.height / 2, Screen.height));*/
                 }
                 else
                 {
-                    vect = new Vector2(bottomRightCenter.x - gazePosition.x, topRightCenter.y - gazePosition.y);
+                    //bas a droite
+                    vect = new Vector2(UnityEngine.Random.Range(0, Screen.width / 2), -UnityEngine.Random.Range(0, Screen.height / 2));
+                    Debug.Log("vect" + vect + "normalised " + vect.normalized + "fitz" + fittDist);
                     vect = fittDist * vect.normalized;
-                    resPos = gazePosition + vect;
-                    if (resPos.x >= Screen.width || resPos.y >= Screen.height)
+                    Debug.Log("vectnormalised" + vect);
+                    resPos = screenCenter + vect;
+                    if (resPos.x >= Screen.width * 0.95f || resPos.y >= Screen.height * 0.95f || (resPos.x <= Screen.width * 0.05f || resPos.y <= Screen.height * 0.05f))
                     {
-                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(Screen.height / 2, Screen.height));
+                        Debug.Log("Out of screen !");
+                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width * 0.95f), UnityEngine.Random.Range(Screen.height * 0.05f, Screen.height / 2));
                     }
                     /*return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(0, Screen.height / 2));*/
                 }
-                
             }
             else
             {
                 if (gazePosition.y < Screen.height / 2)
                 {
-                    vect = new Vector2(topLeftCenter.x - gazePosition.x, topRightCenter.y - gazePosition.y);
+                    //haut a gauche
+                    vect = new Vector2(-UnityEngine.Random.Range(0, Screen.width / 2), UnityEngine.Random.Range(0, Screen.height / 2));
+                    Debug.Log("vect" + vect + "normalised " + vect.normalized + "fitz" + fittDist);
                     vect = fittDist * vect.normalized;
-                    resPos = gazePosition + vect;
-                    if (resPos.x >= Screen.width || resPos.y >= Screen.height)
+                    Debug.Log("vectnormalised" + vect);
+                    resPos = screenCenter + vect;
+
+                    if (resPos.x >= Screen.width * 0.95f || resPos.y >= Screen.height * 0.95f || (resPos.x <= Screen.width * 0.05f || resPos.y <= Screen.height * 0.05f))
                     {
-                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(Screen.height / 2, Screen.height));
+                        Debug.Log("Out of screen !");
+                        return new Vector2(UnityEngine.Random.Range(Screen.width * 0.05f, Screen.width / 2), UnityEngine.Random.Range(Screen.height / 2, Screen.height * 0.95f));
                     }
                     /*return new Vector2(UnityEngine.Random.Range(0, Screen.width / 2), UnityEngine.Random.Range(Screen.height / 2, Screen.height));*/
                 }
                 else
                 {
-                    vect = new Vector2(bottomLeftCenter.x - gazePosition.x, topRightCenter.y - gazePosition.y);
+                    //bas a gauche
+                    vect = new Vector2(-UnityEngine.Random.Range(0, Screen.width / 2), -UnityEngine.Random.Range(0, Screen.height / 2));
+                    Debug.Log("vect" + vect + "normalised " + vect.normalized + "fitz" + fittDist);
                     vect = fittDist * vect.normalized;
-                    resPos = gazePosition + vect;
-                    if (resPos.x >= Screen.width || resPos.y >= Screen.height)
+                    Debug.Log("vectnormalised*fitss" + vect);
+                    resPos = screenCenter + vect;
+                    if (resPos.x >= Screen.width * 0.95f || resPos.y >= Screen.height * 0.95f || (resPos.x <= Screen.width * 0.05f || resPos.y <= Screen.height * 0.05f))
                     {
-                        return new Vector2(UnityEngine.Random.Range(Screen.width / 2, Screen.width), UnityEngine.Random.Range(Screen.height / 2, Screen.height));
+                        Debug.Log("Out of screen !");
+                        return new Vector2(UnityEngine.Random.Range(Screen.width * 0.05f, Screen.width / 2), UnityEngine.Random.Range(Screen.height * 0.05f, Screen.height / 2));
                     }
                     /*return new Vector2(UnityEngine.Random.Range(0, Screen.width / 2), UnityEngine.Random.Range(0, Screen.height / 2));*/
                 }
             }
-            do
-            {
-                resPos.x += UnityEngine.Random.Range(-horizontalRandomisedValue, horizontalRandomisedValue);
-                resPos.y += UnityEngine.Random.Range(-verticalRandomisedValue, verticalRandomisedValue);
-            } while (resPos.x >= Screen.width || resPos.x <= 0 || resPos.y >= Screen.height || resPos.y <= 0);
-
+            /*            do
+                        {
+                            resPos.x += UnityEngine.Random.Range(-horizontalRandomisedValue, horizontalRandomisedValue);
+                            resPos.y += UnityEngine.Random.Range(-verticalRandomisedValue, verticalRandomisedValue);
+                        } while (resPos.x >= Screen.width || resPos.x <= 0 || resPos.y >= Screen.height || resPos.y <= 0);
+            */
             Debug.Log("Position du regarde : " + gazePosition);
             Debug.Log("Position de la cible : " + resPos);
+            //Debug.Log("vect" + vect);
             return resPos;
         }
         /*        Debug.Log("x 3: " + Random.Range(0, halfWidth));
