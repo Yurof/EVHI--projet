@@ -8,182 +8,184 @@
 using DIG.GBLXAPI;
 using TinCan;
 using System.Collections.Generic;
+using UnityEngine;
 
 // --------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------
 public static class GBL_Interface
 {
-	public static string userUUID = "test";
+    public static string userUUID = "test";
 
-	private static Agent PlayerAgent => GBLXAPI.Agent
-		.WithAccount(userUUID, "https://dig-itgames.com/")
-		.WithName("Test User")
-		.Build();
+    private static Agent PlayerAgent => GBLXAPI.Agent
+        .WithAccount(userUUID, "https://dig-itgames.com/")
+        .WithName("Test User")
+        .Build();
 
-
-	public static void SendMeanTimeKill(string playerName, float meanTimeKill)
-	{
-		GBLXAPI.Statement
-			.WithActor(GBLXAPI.Agent
-				.WithAccount(userUUID, "https://company-site.com/")
-				.WithName(playerName)
-				.Build())
-			.WithVerb("completed")
-			.WithTargetActivity(GBLXAPI.Activity
-				.WithID("https://dig-itgames.com/apps/GBLXAPITEST")
-				.WithType("difficulty")
-				.WithValue(meanTimeKill.ToString())
-				.Build())
-			.WithContext(CreateTestContext())
-			.Enqueue();
-	}
-
-	public static void SendAccuracy(string playerName, float accuracy)
-	{
-		GBLXAPI.Statement
-			.WithActor(GBLXAPI.Agent
-				.WithAccount(userUUID, "https://company-site.com/")
-				.WithName(playerName)
-				.Build())
-			.WithVerb("completed")
-			.WithTargetActivity(GBLXAPI.Activity
-				.WithID("https://dig-itgames.com/apps/GBLXAPITES")
-				.WithType("progress")
-				.WithValue(accuracy.ToString())
-				.Build())
-			.WithContext(CreateTestContext())
-			.Enqueue();
-	}
-
-	public static void SendScore(string playerName, int points)
-	{
-		GBLXAPI.Statement
-			.WithActor(GBLXAPI.Agent
-				.WithAccount(userUUID, "https://company-site.com/")
-				.WithName(playerName)
-				.Build())
-			.WithVerb("completed")
-			.WithTargetActivity(GBLXAPI.Activity
-				.WithID("https://dig-itgames.com/apps/GBLXAPITE")
-				.WithType("level")
-				.WithValue(points.ToString())
-				.Build())
-			.WithContext(CreateTestContext())
-			.Enqueue();
-	}
-	public static void SendContextStatement()
-	{
-		GBLXAPI.Statement
-			.WithActor(PlayerAgent)
-			.WithVerb("pressed")
-			.WithTargetActivity(GBLXAPI.Activity
-				.WithID("https://dig-itgames.com/apps/GBLXAPITEST")
-				.WithType("serious-game")
-				.WithValue("GBLXAPI TEST")
-				.Build())
-			.WithContext(CreateTestContext())
-			.Enqueue();
-	}
-
-	public static void SendTimerStarted()
+    public static void SendMeanTimeKill(string playerName, float meanTimeKill)
     {
-		GBLXAPI.Statement
-			.WithActor(PlayerAgent)
-			.WithVerb("started")
-			.WithTargetActivity(GBLXAPI.Activity
-				.WithID("https://dig-itgames.com/apps/GBLXAPITEST")
-				.WithType("serious-game")
-				.WithValue("GBLXAPI TEST")
-				.Build())
-			.WithContext(GBLXAPI.Context
-				.WithParents(new List<Activity>
-				{
-					GBLXAPI.Activity
-						.WithID("https://dig-itgames.com/apps/GBLXAPITEST")
-						.WithType("serious-game")
-						.WithValue("GBLXAPI TEST")
-						.Build()
-				})
-				.WithGroupings(new List<Activity>
-				{
-					GBLXAPI.Activity.WithID("https://dig-itgames.com/").Build()
-				})
-				.Build())
-			.Enqueue();
-	}
+        GBLXAPI.Statement
+            .WithActor(GBLXAPI.Agent
+                .WithAccount(userUUID, "https://company-site.com/")
+                .WithName(playerName)
+                .Build())
+            .WithVerb("finished")
+            .WithTargetActivity(GBLXAPI.Activity
+                .WithID("https://game-site/timekill/" + meanTimeKill.ToString())
+                .WithType("timekill")
+                .WithValue(meanTimeKill.ToString())
+                .Build())
+            .WithContext(CreateTestContext())
+            .Enqueue();
+    }
 
-	public static void SendTimerStopped()
+    public static void SendAccuracy(string playerName, float accuracy)
     {
-		GBLXAPI.Statement
-			.WithActor(PlayerAgent)
-			.WithVerb("completed")
-			.WithTargetActivity(GBLXAPI.Activity
-				.WithID("https://dig-itgames.com/apps/GBLXAPITEST")
-				.WithType("serious-game")
-				.WithValue("GBLXAPI TEST")
-				.Build())
-			.WithContext(GBLXAPI.Context
-				.WithParents(new List<Activity>
-				{
-					GBLXAPI.Activity
-						.WithID("https://dig-itgames.com/apps/GBLXAPITEST")
-						.WithType("serious-game")
-						.WithValue("GBLXAPI TEST")
-						.Build()
-				})
-				.WithGroupings(new List<Activity>
-				{
-					GBLXAPI.Activity.WithID("https://dig-itgames.com/").Build()
-				})
-				.Build())
-			.WithResult(GBLXAPI.Result
-				.Complete()
-				.Successful()
-				.WithDuration(GBLXAPI.Timers.GetSlot(1)))
-			.Enqueue();
-	}
+        GBLXAPI.Statement
+            .WithActor(GBLXAPI.Agent
+                .WithAccount(userUUID, "https://company-site.com/")
+                .WithName(playerName)
+                .Build())
+            .WithVerb("finished")
+            .WithTargetActivity(GBLXAPI.Activity
+                .WithID("https://game-site/accuracy/" + accuracy.ToString())
+                .WithType("accuracy")
+                .WithValue(accuracy.ToString())
+                .Build())
+            .WithContext(CreateTestContext())
+            .Enqueue();
+    }
 
-	// // ------------------------------------------------------------------------
-	// // Sample Context Generators
-	// // ------------------------------------------------------------------------
+    public static void SendScore(string playerName, int points)
+    {
+        GBLXAPI.Statement
+            .WithActor(GBLXAPI.Agent
+                .WithAccount(userUUID, "https://company-site.com/")
+                .WithName(playerName)
+                .Build())
+            .WithVerb("finished")
+            .WithTargetActivity(GBLXAPI.Activity
+                .WithID("https://game-site/score/" + points.ToString())
+                .WithType("score")
+                .WithValue(points.ToString())
+                .Build())
+            .Enqueue();
+        Debug.Log("send score " + points);
+    }
+
+    public static void SendContextStatement()
+    {
+        GBLXAPI.Statement
+            .WithActor(PlayerAgent)
+            .WithVerb("pressed")
+            .WithTargetActivity(GBLXAPI.Activity
+                .WithID("https://dig-itgames.com/apps/GBLXAPITEST")
+                .WithType("serious-game")
+                .WithValue("GBLXAPI TEST")
+                .Build())
+            .WithContext(CreateTestContext())
+            .Enqueue();
+    }
+
+    public static void SendTimerStarted()
+    {
+        GBLXAPI.Statement
+            .WithActor(PlayerAgent)
+            .WithVerb("started")
+            .WithTargetActivity(GBLXAPI.Activity
+                .WithID("https://dig-itgames.com/apps/GBLXAPITEST")
+                .WithType("serious-game")
+                .WithValue("GBLXAPI TEST")
+                .Build())
+            .WithContext(GBLXAPI.Context
+                .WithParents(new List<Activity>
+                {
+                    GBLXAPI.Activity
+                        .WithID("https://dig-itgames.com/apps/GBLXAPITEST")
+                        .WithType("serious-game")
+                        .WithValue("GBLXAPI TEST")
+                        .Build()
+                })
+                .WithGroupings(new List<Activity>
+                {
+                    GBLXAPI.Activity.WithID("https://dig-itgames.com/").Build()
+                })
+                .Build())
+            .Enqueue();
+    }
+
+    public static void SendTimerStopped()
+    {
+        GBLXAPI.Statement
+            .WithActor(PlayerAgent)
+            .WithVerb("completed")
+            .WithTargetActivity(GBLXAPI.Activity
+                .WithID("https://dig-itgames.com/apps/GBLXAPITEST")
+                .WithType("serious-game")
+                .WithValue("GBLXAPI TEST")
+                .Build())
+            .WithContext(GBLXAPI.Context
+                .WithParents(new List<Activity>
+                {
+                    GBLXAPI.Activity
+                        .WithID("https://dig-itgames.com/apps/GBLXAPITEST")
+                        .WithType("serious-game")
+                        .WithValue("GBLXAPI TEST")
+                        .Build()
+                })
+                .WithGroupings(new List<Activity>
+                {
+                    GBLXAPI.Activity.WithID("https://dig-itgames.com/").Build()
+                })
+                .Build())
+            .WithResult(GBLXAPI.Result
+                .Complete()
+                .Successful()
+                .WithDuration(GBLXAPI.Timers.GetSlot(1)))
+            .Enqueue();
+    }
+
+    // // ------------------------------------------------------------------------
+    // // Sample Context Generators
+    // // ------------------------------------------------------------------------
     /*
-    Since context generation can be many lines of code, it is often helpful to separate it out into helper functions. 
+    Since context generation can be many lines of code, it is often helpful to separate it out into helper functions.
     These functions will be responsible for creating Context Activities, Context Extensions, and assigning them to a singular Context object.
      */
-	public static Context CreateTestContext()
-	{
-		return GBLXAPI.Context
-			.WithParents(new List<Activity>
-			{
-				GBLXAPI.Activity
-					.WithID("https://company.com/example-game")
-					.WithType("serious-game")
-					.WithValue("GBLXAPI TEST")
-					.Build()
-			})
-			.WithGroupings(new List<Activity>
-			{
-				GBLXAPI.Activity.WithID("https://company.com/").Build()
-			})
-			.WithCategories(new List<Activity>
-			{
-				GBLXAPI.Activity.WithID("https://gblxapi.org/socialstudies").Build(),
-				GBLXAPI.Activity.WithID("https://gblxapi.org/math").Build()
-			})
-			.WithExtensions(GBLXAPI.Extensions
-				.WithStandard("Grade", "Grade 4 level")
-				.WithStandard("Domain", "History")
-				.WithStandard("Domain", "Number and Operations in Base Ten")
-				.WithStandard("Subdomain", "Problem Solving")
-				.WithStandard("Skill", "Patterns and Relationships")
-				.WithStandard("Skill", "Calculation and Computation")
-				.WithStandard("Topic", "Arithmetic")
-				.WithStandard("Focus", "Addition/Subtraction")
-				.WithStandard("Action", "Solve Problems")
-				.WithStandard("C3 Framework", "d2.His.13.6-8.", "c3")
-				.WithStandard("CC-MATH", "CCSS.Math.Content.4.NBT.B.4", "cc")
-				.WithStandard("CC-MATH", "CCSS.Math.Content.5.NBT.A.1", "cc")
-				.Build())
-			.Build();
-	}
+
+    public static Context CreateTestContext()
+    {
+        return GBLXAPI.Context
+            .WithParents(new List<Activity>
+            {
+                GBLXAPI.Activity
+                    .WithID("https://company.com/example-game")
+                    .WithType("serious-game")
+                    .WithValue("GBLXAPI TEST")
+                    .Build()
+            })
+            .WithGroupings(new List<Activity>
+            {
+                GBLXAPI.Activity.WithID("https://company.com/").Build()
+            })
+            .WithCategories(new List<Activity>
+            {
+                GBLXAPI.Activity.WithID("https://gblxapi.org/socialstudies").Build(),
+                GBLXAPI.Activity.WithID("https://gblxapi.org/math").Build()
+            })
+            .WithExtensions(GBLXAPI.Extensions
+                .WithStandard("Grade", "Grade 4 level")
+                .WithStandard("Domain", "History")
+                .WithStandard("Domain", "Number and Operations in Base Ten")
+                .WithStandard("Subdomain", "Problem Solving")
+                .WithStandard("Skill", "Patterns and Relationships")
+                .WithStandard("Skill", "Calculation and Computation")
+                .WithStandard("Topic", "Arithmetic")
+                .WithStandard("Focus", "Addition/Subtraction")
+                .WithStandard("Action", "Solve Problems")
+                .WithStandard("C3 Framework", "d2.His.13.6-8.", "c3")
+                .WithStandard("CC-MATH", "CCSS.Math.Content.4.NBT.B.4", "cc")
+                .WithStandard("CC-MATH", "CCSS.Math.Content.5.NBT.A.1", "cc")
+                .Build())
+            .Build();
+    }
 }

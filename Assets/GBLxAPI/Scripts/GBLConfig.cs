@@ -8,9 +8,9 @@
         public const string LrsURL = "https://trial-lrs.yetanalytics.io/xapi";
 
         // Fill in these fields for GBLxAPI setup.
-        public string lrsUser = "3f518c38544091afc5a76a344dbd1698";
+        public string lrsUser = "b14dfc5c83e5a6e6f5cdadfdc80d3e9a";
 
-        public string lrsPassword = "63f9ae65f99df7b9c74f6e11afc08e65";
+        public string lrsPassword = "6566f1aa869ea700491b733fb548cf1f";
 
         public string companyURI = "https://company.com/";
         public string gameURI = "https://company.com/example-game";

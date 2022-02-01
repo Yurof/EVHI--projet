@@ -6,6 +6,7 @@ public class GameUI : MonoBehaviour
     public GameObject scoreCanvas;
     public GameObject optionCanvas;
     public GameObject GazePlot;
+    public GameObject background2;
 
     public void NewGame()
     {
@@ -15,6 +16,7 @@ public class GameUI : MonoBehaviour
 
     public void GameOver()
     {
+        background2.SetActive(false);
         playCanvas.SetActive(false);
         scoreCanvas.SetActive(true);
     }
@@ -39,5 +41,10 @@ public class GameUI : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ChangeBackground()
+    {
+        background2.SetActive(true);
     }
 }

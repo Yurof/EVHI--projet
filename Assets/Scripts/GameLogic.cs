@@ -7,6 +7,7 @@ using System;
 public class GameLogic : MonoBehaviour
 {
     public AudioSource hitaudio;
+    public AudioSource missaudio;
 
     /// The targets in the scene.
     public Target[] targets;
@@ -159,6 +160,15 @@ public class GameLogic : MonoBehaviour
         location.NewGame();
         disabledTargets.Clear();
 
+        if (targetSize <= 0.8f && targetDuration <= 1.2f)
+        {
+            ui.ChangeBackground();
+        }
+        else
+        {
+            Debug.Log(targetSize + " " + targetDuration);
+        }
+
         foreach (Target m in targets)
         {
             m.Despawn();
@@ -223,6 +233,7 @@ public class GameLogic : MonoBehaviour
 
     public void ResetCombo()
     {
+        missaudio.Play();
         score.UpdateAccurcy(false);
         animatorCombo.SetTrigger("breakerTrigger");
         pointsCombo = 0;

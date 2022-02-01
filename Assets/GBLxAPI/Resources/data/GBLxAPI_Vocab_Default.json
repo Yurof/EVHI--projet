@@ -290,13 +290,31 @@
                 "en-US": "level"
             }
         },
-        "media": {
+        "score": {
             "description": {
-                "en-US": "media refers to text, audio, or video used to convey information. media can be consumed (tracked: completed), but doesn\u2019t have an interactive component that may result in a score, success, or failure."
+                "en-US": "indicates that the user scored something"
             },
-            "id": "http://adlnet.gov/expapi/activities/media",
+            "id": "https://w3id.org/xapi/seriousgames/activity-types/level",
             "name": {
-                "en-US": "media"
+                "en-US": "score"
+            }
+        },
+        "accuracy": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://w3id.org/xapi/seriousgames/activity-types/level",
+            "name": {
+                "en-US": "accuracy"
+            }
+        },
+        "timekill": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://w3id.org/xapi/seriousgames/activity-types/level",
+            "name": {
+                "en-US": "mean time to kill"
             }
         },
         "menu": {
@@ -20418,6 +20436,15 @@
             "id": "https://w3id.org/xapi/dod-isd/verbs/completed",
             "name": {
                 "en-US": "completed"
+            }
+        },
+        "finished": {
+            "description": {
+                "en-US": ""
+            },
+            "id": "https://w3id.org/xapi/dod-isd/verbs/completed",
+            "name": {
+                "en-US": "finished a game"
             }
         },
         "exited": {

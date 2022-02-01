@@ -413,7 +413,6 @@ GameObject:
   m_Component:
   - component: {fileID: 912750654}
   - component: {fileID: 912750653}
-  - component: {fileID: 912750652}
   - component: {fileID: 912750651}
   m_Layer: 0
   m_Name: Camera Gaze
@@ -434,14 +433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb23190751f02843adc364ff80198f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!81 &912750652
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912750650}
-  m_Enabled: 1
 --- !u!20 &912750653
 Camera:
   m_ObjectHideFlags: 0

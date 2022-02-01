@@ -15,8 +15,7 @@ public class Score : MonoBehaviour
     public Text[] topScoresText;
 
     public GameLogic GameLogic;
-
-    public Text statementText;
+    public GameUI ui;
 
     private string zero = "0";
     private GameSave gameSave = new GameSave();
@@ -40,6 +39,7 @@ public class Score : MonoBehaviour
             ListScore.AddRange(gd.scores);
             ListAccuracy.AddRange(gd.accuracies);
             Listmeantimekill.AddRange(gd.meantimekills);
+
             if (Queryable.Average(ListAccuracy.AsQueryable()) < accurateThreshold)
             {
                 GameLogic.targetSize = 1.5f;
@@ -120,8 +120,8 @@ public class Score : MonoBehaviour
         Debug.Log("Mean time kill : " + scoremeanTimeKill);
         Debug.Log("accuracy : " + accuracy);
         Debug.Log("score : " + s);
-        /*GBL_Interface.SendMeanTimeKill(PlayerPrefs.GetString("name"), scoremeanTimeKill);*/
-        /*GBL_Interface.SendAccuracy(PlayerPrefs.GetString("name"), accuracy);*/
+        GBL_Interface.SendMeanTimeKill(PlayerPrefs.GetString("name"), scoremeanTimeKill);
+        GBL_Interface.SendAccuracy(PlayerPrefs.GetString("name"), accuracy);
         GBL_Interface.SendScore(PlayerPrefs.GetString("name"), s);
         Debug.Log("send");
     }
