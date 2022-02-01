@@ -1325,7 +1325,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 034314dba7607674a831e60e514f8491, type: 2}
   - {fileID: 11400000, guid: 164050875c0a0654c81d11e7ceec5c16, type: 2}
   - {fileID: 11400000, guid: 6d9b4b065341ea44d865123d2836230b, type: 2}
-  spawnTimer: 1.5
+  spawnTimer: 2
   score: {fileID: 428353676}
   timer: {fileID: 428353675}
   ui: {fileID: 428353677}

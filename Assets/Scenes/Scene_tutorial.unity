@@ -983,8 +983,13 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 796233381409643515, guid: 149cf5476b10d3d43a168755fb5430cc,
         type: 3}
-      propertyPath: m_SortingOrder
+      propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 796233381409643515, guid: 149cf5476b10d3d43a168755fb5430cc,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 796233381409643514, guid: 149cf5476b10d3d43a168755fb5430cc, type: 3}

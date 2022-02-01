@@ -5,13 +5,8 @@ using UnityEngine.UI;
 public class TargetVisuals : MonoBehaviour
 {
     public RectTransform scale;
-    /*    public Image front;
-        public Image back;*/
 
     public RectTransform movingImage;
-    /*    public RectTransform target;
-    */
-    private float step;
 
     public void Respawn(TargetData data)
     {
@@ -19,12 +14,6 @@ public class TargetVisuals : MonoBehaviour
         movingImage.GetComponent<Image>().color = new Color(initialColor.r, initialColor.g, initialColor.b, 1f);
 
         scale.localScale = new Vector2(data.size, data.size);
-
-        /*        front.color = data.color;
-                back.color = data.color;*/
-
-        /*movingImage.localPosition = Vector2.zero;*/
-        /*step = (Vector2.Distance(movingImage.localPosition, target.localPosition) / data.timeOnScreen) * Time.deltaTime;*/
 
         StartCoroutine("Animate", data);
     }

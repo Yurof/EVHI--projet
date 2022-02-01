@@ -12,9 +12,6 @@ public class GameLogic : MonoBehaviour
     /// The targets in the scene.
     public Target[] targets;
 
-    /// All the target types, TargetData is a scriptable object.
-    public TargetData[] targetData;
-
     /// The time interval to spawn a new target.
     public float spawnTimer;
 
@@ -164,10 +161,6 @@ public class GameLogic : MonoBehaviour
         {
             ui.ChangeBackground();
         }
-        else
-        {
-            Debug.Log(targetSize + " " + targetDuration);
-        }
 
         foreach (Target m in targets)
         {
@@ -184,7 +177,7 @@ public class GameLogic : MonoBehaviour
         meanTimeKill = 0f;
 
         StartCoroutine("SpawnTargets");
-        SpawnImmediate();
+        //SpawnImmediate();
         timer.NewGame();
     }
 
@@ -205,28 +198,17 @@ public class GameLogic : MonoBehaviour
         {
             if (currentTargetsOnScreen == 0 && disabledTargets.Count > 0)
             {
-                disabledTargets[0].Respawn(location.FindLocation(disabledTargets[0], fittDist), RandomTarget());
+                yield return wait;
+                disabledTargets[0].Respawn(location.FindLocation(disabledTargets[0], fittDist), setTargetData());
                 disabledTargets.RemoveAt(0);
                 currentTargetsOnScreen++;
             }
 
-            yield return wait;
+            yield return null;
         }
     }
 
-    /// Spawn targets immediatly to make sure at least 1 targets are on screen.
-    private void SpawnImmediate()
-    {
-        while (currentTargetsOnScreen < 1 && disabledTargets.Count > 0)
-        {
-            disabledTargets[0].Respawn(location.FindLocation(disabledTargets[0], fittDist), RandomTarget());
-            disabledTargets.RemoveAt(0);
-            currentTargetsOnScreen++;
-        }
-    }
-
-    /// Picks a random scriptable object for the target's data.
-    private TargetData RandomTarget()
+    private TargetData setTargetData()
     {
         return new TargetData { size = targetSize, timeOnScreen = targetDuration };
     }

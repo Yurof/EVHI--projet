@@ -17,7 +17,6 @@ public class Score : MonoBehaviour
     public GameLogic GameLogic;
     public GameUI ui;
 
-    private string zero = "0";
     private GameSave gameSave = new GameSave();
     private List<int> ListScore = new List<int>();
     private List<float> ListAccuracy = new List<float>();
