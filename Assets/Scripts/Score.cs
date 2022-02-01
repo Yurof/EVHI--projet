@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using DIG.GBLXAPI;
+using TinCan;
 
 public class Score : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class Score : MonoBehaviour
     public Text[] topScoresText;
 
     public GameLogic GameLogic;
+
+    public Text statementText;
 
     private string zero = "0";
     private GameSave gameSave = new GameSave();

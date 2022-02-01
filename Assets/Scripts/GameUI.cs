@@ -35,4 +35,9 @@ public class GameUI : MonoBehaviour
         optionCanvas.SetActive(false);
         scoreCanvas.SetActive(true);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
