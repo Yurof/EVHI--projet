@@ -102,7 +102,7 @@ public class GameLogic : MonoBehaviour
             oldMeanTimeKill = meanTimeKill;
             meanTimeKill = Queryable.Average(timeKillList.AsQueryable());
 
-            fittDist = targetSize * ((float)Math.Pow(2, ((1 / meanTimeKill) - a) / b) - 1);
+            fittDist = targetSize * ((float)Math.Pow(2, ((3 / meanTimeKill) - a) / b) - 1);
 
             if (meanTimeKill - oldMeanTimeKill <= 0)
             {
@@ -125,7 +125,7 @@ public class GameLogic : MonoBehaviour
             {
                 Debug.Log("Target size decreased");
             }
-            targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
+            targetSize = Math.Max(targetSize * 0.97f, targetMinSize);
         }
         else
         {
@@ -148,7 +148,7 @@ public class GameLogic : MonoBehaviour
                 {
                     Debug.Log("Target size increased");
                 }
-                targetSize = Math.Min(targetSize * 1.1f, targetMaxSize);
+                targetSize = Math.Min(targetSize * 1.8f, targetMaxSize);
             }
         }
     }

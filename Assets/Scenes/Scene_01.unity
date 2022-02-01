@@ -1295,6 +1295,7 @@ GameObject:
   - component: {fileID: 428353675}
   - component: {fileID: 428353677}
   - component: {fileID: 428353680}
+  - component: {fileID: 428353679}
   m_Layer: 0
   m_Name: Game Logic
   m_TagString: Untagged
@@ -1364,7 +1365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1708405945}
-  startTime: 5
+  startTime: 30
 --- !u!114 &428353676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,6 +1423,19 @@ MonoBehaviour:
   screen: {fileID: 2066520344}
   horizontalRandomisedValue: 45
   verticalRandomisedValue: 49
+--- !u!114 &428353679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428353672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f76e8eb3429d42e468de2ba57ec727f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshair: {fileID: 2800000, guid: 54956fd5a4a204345b1af586b2fdce21, type: 3}
 --- !u!114 &428353680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2918,7 +2932,7 @@ MonoBehaviour:
   PointSprite: {fileID: 21300000, guid: 0a2bf99dceac3bc48ab106c094250497, type: 3}
   PointScale: 0.709
   VisualizationDistance: 10
-  FilterSmoothingFactor: 0.15
+  FilterSmoothingFactor: 0.125
 --- !u!4 &1069859250
 Transform:
   m_ObjectHideFlags: 0
