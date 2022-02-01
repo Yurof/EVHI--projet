@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoleVisuals : MonoBehaviour
+public class TargetVisuals : MonoBehaviour
 {
     public RectTransform scale;
     /*    public Image front;
@@ -13,7 +13,7 @@ public class MoleVisuals : MonoBehaviour
     */
     private float step;
 
-    public void Respawn(MoleData data)
+    public void Respawn(TargetData data)
     {
         Color initialColor = movingImage.GetComponent<Image>().color;
         movingImage.GetComponent<Image>().color = new Color(initialColor.r, initialColor.g, initialColor.b, 1f);
@@ -29,7 +29,7 @@ public class MoleVisuals : MonoBehaviour
         StartCoroutine("Animate", data);
     }
 
-    private IEnumerator Animate(MoleData data)
+    private IEnumerator Animate(TargetData data)
     {
         Color initialColor = movingImage.GetComponent<Image>().color;
         Color targetColor = new Color(initialColor.r, initialColor.g, initialColor.b, 0f);

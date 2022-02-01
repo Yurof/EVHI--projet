@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu]
-public class MoleData : ScriptableObject
+public class TargetData : ScriptableObject
 {
     [Range(0.4f, 2.4f)]
     public float size;

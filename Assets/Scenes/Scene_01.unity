@@ -1187,11 +1187,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitaudio: {fileID: 346025265}
-  moles:
+  targets:
   - {fileID: 230362126}
   - {fileID: 564128500}
   - {fileID: 511663703}
-  moleData:
+  targetData:
   - {fileID: 11400000, guid: 034314dba7607674a831e60e514f8491, type: 2}
   - {fileID: 11400000, guid: 164050875c0a0654c81d11e7ceec5c16, type: 2}
   - {fileID: 11400000, guid: 6d9b4b065341ea44d865123d2836230b, type: 2}
@@ -1909,7 +1909,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1457770604297350, guid: 1ad7e5340a246ed4ba27f8f70916b0d2, type: 3}
       propertyPath: m_Name
-      value: Mole_02
+      value: Target_02
       objectReference: {fileID: 0}
     - target: {fileID: 1457770604297350, guid: 1ad7e5340a246ed4ba27f8f70916b0d2, type: 3}
       propertyPath: m_IsActive
@@ -2402,7 +2402,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1457770604297350, guid: 1ad7e5340a246ed4ba27f8f70916b0d2, type: 3}
       propertyPath: m_Name
-      value: Mole_01
+      value: Target_01
       objectReference: {fileID: 0}
     - target: {fileID: 1457770604297350, guid: 1ad7e5340a246ed4ba27f8f70916b0d2, type: 3}
       propertyPath: m_IsActive
@@ -2890,7 +2890,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1457770604297350, guid: 1ad7e5340a246ed4ba27f8f70916b0d2, type: 3}
       propertyPath: m_Name
-      value: Mole_03
+      value: Target_03
       objectReference: {fileID: 0}
     - target: {fileID: 1457770604297350, guid: 1ad7e5340a246ed4ba27f8f70916b0d2, type: 3}
       propertyPath: m_IsActive

@@ -8,13 +8,13 @@ public class GameLogic : MonoBehaviour
 {
     public AudioSource hitaudio;
 
-    /// The moles in the scene.
-    public Mole[] moles;
+    /// The targets in the scene.
+    public Target[] targets;
 
-    /// All the mole types, MoleData is a scriptable object.
-    public MoleData[] moleData;
+    /// All the target types, TargetData is a scriptable object.
+    public TargetData[] targetData;
 
-    /// The time interval to spawn a new mole.
+    /// The time interval to spawn a new target.
     public float spawnTimer;
 
     /// Score handles the score and display it.
@@ -26,19 +26,19 @@ public class GameLogic : MonoBehaviour
     /// Changes the game ui state from "gameplay" to "menu" and viseversa.
     public GameUI ui;
 
-    /// Location is responable for choosing a random location to spawn the mole at.
+    /// Location is responable for choosing a random location to spawn the target at.
     public RandomLocation location;
 
-    /// The number of moles currently on screen.
-    private int currentMolesOnScreen;
+    /// The number of targets currently on screen.
+    private int currentTargetsOnScreen;
 
     /// The current score of an active game round.
     private int points;
 
     private int pointsCombo;
 
-    /// All the disabled mole. we use one of them when we need to spawn a new mole.
-    private List<Mole> disabledMoles = new List<Mole>();
+    /// All the disabled target. we use one of them when we need to spawn a new target.
+    private List<Target> disabledTargets = new List<Target>();
 
     /// Wait time used to spawning coroutine.
     private WaitForSeconds wait;
@@ -67,10 +67,10 @@ public class GameLogic : MonoBehaviour
 
     private void Awake()
     {
-        // Listen to all the moles' click event.
-        foreach (Mole m in moles)
+        // Listen to all the targets' click event.
+        foreach (Target m in targets)
         {
-            m.OnMoleDied += MoleDied;
+            m.OnTargetDied += TargetDied;
         }
 
         // liseten to the timer's timeout event.
@@ -79,13 +79,13 @@ public class GameLogic : MonoBehaviour
         wait = new WaitForSeconds(spawnTimer);
     }
 
-    /// Call back when a mole was clicked.
-    /// if clicked is true. the mole was actually click and we need to add to the score.
-    private void MoleDied(Mole mole, bool clicked)
+    /// Call back when a target was clicked.
+    /// if clicked is true. the target was actually click and we need to add to the score.
+    private void TargetDied(Target target, bool clicked)
     {
-        location.FreeLocation(mole);
-        disabledMoles.Add(mole);
-        currentMolesOnScreen--;
+        location.FreeLocation(target);
+        disabledTargets.Add(target);
+        currentTargetsOnScreen--;
 
         if (clicked)
         {
@@ -97,7 +97,7 @@ public class GameLogic : MonoBehaviour
             score.UpdateCombo(pointsCombo);
             animatorCombo.SetTrigger("comboTrigger");
 
-            timeKillList.Add(Time.time - mole.data.spawnTime);
+            timeKillList.Add(Time.time - target.data.spawnTime);
             oldMeanTimeKill = meanTimeKill;
             meanTimeKill = Queryable.Average(timeKillList.AsQueryable());
 
@@ -157,30 +157,30 @@ public class GameLogic : MonoBehaviour
         ui.NewGame();
         score.NewGame();
         location.NewGame();
-        disabledMoles.Clear();
+        disabledTargets.Clear();
 
-        foreach (Mole m in moles)
+        foreach (Target m in targets)
         {
             m.Despawn();
-            disabledMoles.Add(m);
+            disabledTargets.Add(m);
         }
 
         points = 0;
-        currentMolesOnScreen = 0;
+        currentTargetsOnScreen = 0;
 
         timeKillList = new List<float>();
 
         oldMeanTimeKill = 0f;
         meanTimeKill = 0f;
 
-        StartCoroutine("SpawnMoles");
+        StartCoroutine("SpawnTargets");
         SpawnImmediate();
         timer.NewGame();
     }
 
     private void GameOver()
     {
-        StopCoroutine("SpawnMoles");
+        StopCoroutine("SpawnTargets");
         score.scoremeanTimeKill = meanTimeKill;
         ui.GameOver();
         score.GameOver(points);
@@ -188,37 +188,37 @@ public class GameLogic : MonoBehaviour
         score.UpdateCombo(pointsCombo);
     }
 
-    /// Coroutine to spawn a new mole every time interval.
-    private IEnumerator SpawnMoles()
+    /// Coroutine to spawn a new target every time interval.
+    private IEnumerator SpawnTargets()
     {
         while (true)
         {
-            if (currentMolesOnScreen == 0 && disabledMoles.Count > 0)
+            if (currentTargetsOnScreen == 0 && disabledTargets.Count > 0)
             {
-                disabledMoles[0].Respawn(location.FindLocation(disabledMoles[0], fittDist), RandomMole());
-                disabledMoles.RemoveAt(0);
-                currentMolesOnScreen++;
+                disabledTargets[0].Respawn(location.FindLocation(disabledTargets[0], fittDist), RandomTarget());
+                disabledTargets.RemoveAt(0);
+                currentTargetsOnScreen++;
             }
 
             yield return wait;
         }
     }
 
-    /// Spawn moles immediatly to make sure at least 1 moles are on screen.
+    /// Spawn targets immediatly to make sure at least 1 targets are on screen.
     private void SpawnImmediate()
     {
-        while (currentMolesOnScreen < 1 && disabledMoles.Count > 0)
+        while (currentTargetsOnScreen < 1 && disabledTargets.Count > 0)
         {
-            disabledMoles[0].Respawn(location.FindLocation(disabledMoles[0], fittDist), RandomMole());
-            disabledMoles.RemoveAt(0);
-            currentMolesOnScreen++;
+            disabledTargets[0].Respawn(location.FindLocation(disabledTargets[0], fittDist), RandomTarget());
+            disabledTargets.RemoveAt(0);
+            currentTargetsOnScreen++;
         }
     }
 
-    /// Picks a random scriptable object for the mole's data.
-    private MoleData RandomMole()
+    /// Picks a random scriptable object for the target's data.
+    private TargetData RandomTarget()
     {
-        return new MoleData { size = targetSize, timeOnScreen = targetDuration };
+        return new TargetData { size = targetSize, timeOnScreen = targetDuration };
     }
 
     public void ResetCombo()

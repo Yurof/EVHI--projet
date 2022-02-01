@@ -7,7 +7,7 @@ public class RandomLocation : MonoBehaviour
 {
     public RectTransform screen;
 
-    private Dictionary<Mole, Vector2> reservedLocation = new Dictionary<Mole, Vector2>();
+    private Dictionary<Target, Vector2> reservedLocation = new Dictionary<Target, Vector2>();
 
     /// half the width of the screen.
     private float halfWidth;
@@ -15,7 +15,7 @@ public class RandomLocation : MonoBehaviour
     /// half the height of the screen.
     private float halfHeight;
 
-    private const float MoleRadius = 50.0f;
+    private const float TargetRadius = 50.0f;
 
     private Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
@@ -33,7 +33,7 @@ public class RandomLocation : MonoBehaviour
         reservedLocation.Clear();
     }
 
-    public Vector2 FindLocation(Mole m, float fittDist)
+    public Vector2 FindLocation(Target m, float fittDist)
     {
         Vector2 random = GetRandom(fittDist);
 
@@ -121,16 +121,16 @@ public class RandomLocation : MonoBehaviour
         };
     }
 
-    public void FreeLocation(Mole m)
+    public void FreeLocation(Target m)
     {
         reservedLocation.Remove(m);
     }
 
-    private bool CheckOverlap(Mole m, Vector2 newPos)
+    private bool CheckOverlap(Target m, Vector2 newPos)
     {
-        foreach (KeyValuePair<Mole, Vector2> entry in reservedLocation)
+        foreach (KeyValuePair<Target, Vector2> entry in reservedLocation)
         {
-            float minDistance = (MoleRadius * m.data.size) + (MoleRadius * entry.Key.data.size);
+            float minDistance = (TargetRadius * m.data.size) + (TargetRadius * entry.Key.data.size);
 
             float distance = Vector2.Distance(newPos, entry.Value);
 

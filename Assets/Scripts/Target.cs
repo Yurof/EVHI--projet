@@ -3,18 +3,18 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
-public class Mole : MonoBehaviour
+public class Target : MonoBehaviour
 {
-    /// Used to animate and scale the mole
-    public MoleVisuals visuals;
+    /// Used to animate and scale the target
+    public TargetVisuals visuals;
 
-    public UnityAction<Mole, bool> OnMoleDied;
+    public UnityAction<Target, bool> OnTargetDied;
 
     [HideInInspector]
-    public MoleData data;
+    public TargetData data;
 
-    /// Spawn the mole at a given position.
-    public void Respawn(Vector2 pos, MoleData d)
+    /// Spawn the target at a given position.
+    public void Respawn(Vector2 pos, TargetData d)
     {
         data = d;
 
@@ -28,7 +28,7 @@ public class Mole : MonoBehaviour
     }
 
     /// <summary>
-    /// Despawn the mole.
+    /// Despawn the target.
     /// </summary>
     public void Despawn()
     {
@@ -38,18 +38,18 @@ public class Mole : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    /// Called when the mole is clicked.
-    public void MoleClicked()
+    /// Called when the target is clicked.
+    public void TargetClicked()
     {
         StopCoroutine("Timer");
-        OnMoleDied(this, true);
+        OnTargetDied(this, true);
         Despawn();
     }
 
     private IEnumerator Timer()
     {
         yield return new WaitForSeconds(data.timeOnScreen);
-        OnMoleDied(this, false);
+        OnTargetDied(this, false);
         Despawn();
     }
 }

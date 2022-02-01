@@ -131,7 +131,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 114918513212745192}
           m_TargetAssemblyTypeName: 
-          m_MethodName: MoleClicked
+          m_MethodName: TargetClicked
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 114918513212745192}
   - component: {fileID: 114461150910941700}
   m_Layer: 5
-  m_Name: Mole
+  m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
