@@ -20,6 +20,57 @@ public static class GBL_Interface
 		.WithName("Test User")
 		.Build();
 
+
+	public static void SendMeanTimeKill(string playerName, float meanTimeKill)
+	{
+		GBLXAPI.Statement
+			.WithActor(GBLXAPI.Agent
+				.WithAccount(userUUID, "https://company-site.com/")
+				.WithName(playerName)
+				.Build())
+			.WithVerb("completed")
+			.WithTargetActivity(GBLXAPI.Activity
+				.WithID("https://dig-itgames.com/apps/GBLXAPITEST")
+				.WithType("difficulty")
+				.WithValue(meanTimeKill.ToString())
+				.Build())
+			.WithContext(CreateTestContext())
+			.Enqueue();
+	}
+
+	public static void SendAccuracy(string playerName, float accuracy)
+	{
+		GBLXAPI.Statement
+			.WithActor(GBLXAPI.Agent
+				.WithAccount(userUUID, "https://company-site.com/")
+				.WithName(playerName)
+				.Build())
+			.WithVerb("completed")
+			.WithTargetActivity(GBLXAPI.Activity
+				.WithID("https://dig-itgames.com/apps/GBLXAPITES")
+				.WithType("progress")
+				.WithValue(accuracy.ToString())
+				.Build())
+			.WithContext(CreateTestContext())
+			.Enqueue();
+	}
+
+	public static void SendScore(string playerName, int points)
+	{
+		GBLXAPI.Statement
+			.WithActor(GBLXAPI.Agent
+				.WithAccount(userUUID, "https://company-site.com/")
+				.WithName(playerName)
+				.Build())
+			.WithVerb("completed")
+			.WithTargetActivity(GBLXAPI.Activity
+				.WithID("https://dig-itgames.com/apps/GBLXAPITE")
+				.WithType("level")
+				.WithValue(points.ToString())
+				.Build())
+			.WithContext(CreateTestContext())
+			.Enqueue();
+	}
 	public static void SendContextStatement()
 	{
 		GBLXAPI.Statement

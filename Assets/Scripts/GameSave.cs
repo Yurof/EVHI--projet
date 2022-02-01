@@ -31,18 +31,6 @@ public class GameSave
 
         bf.Serialize(file, playerScore);
         file.Close();
-
-        GBLXAPI.Init(new GBLConfig());
-        GBLXAPI.debugMode = true;
-        GBLXAPI.Timers.ResetSlot(0);
-
-        Debug.Log(PlayerPrefs.GetString("name"));
-        GBL_Interface.userUUID = GBLUtils.GenerateActorUUID("zzzz");
-        Debug.Log(GBL_Interface.userUUID);
-        //statementText.text = "zzzz";
-        //Debug.Log(scoreText.text);
-        GBL_Interface.SendContextStatement();
-        Debug.Log("send");
     }
 
     public GameData Load()

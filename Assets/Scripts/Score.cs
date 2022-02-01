@@ -104,6 +104,26 @@ public class Score : MonoBehaviour
         ListAccuracy.Add(accuracy);
         Listmeantimekill.Add(scoremeanTimeKill);
         SaveData(s);
+
+        GBLXAPI.Init(new GBLConfig());
+        GBLXAPI.debugMode = true;
+
+        /*GBL_Interface.playerName = PlayerPrefs.GetString("name");*/
+
+        GBLXAPI.Timers.ResetSlot(0);
+
+        Debug.Log(PlayerPrefs.GetString("name"));
+        GBL_Interface.userUUID = PlayerPrefs.GetString("name");
+        Debug.Log(GBL_Interface.userUUID);
+        //statementText.text = "zzzz";
+        //Debug.Log(scoreText.text);
+        Debug.Log("Mean time kill : " + scoremeanTimeKill);
+        Debug.Log("accuracy : " + accuracy);
+        Debug.Log("score : " + s);
+        /*GBL_Interface.SendMeanTimeKill(PlayerPrefs.GetString("name"), scoremeanTimeKill);*/
+        /*GBL_Interface.SendAccuracy(PlayerPrefs.GetString("name"), accuracy);*/
+        GBL_Interface.SendScore(PlayerPrefs.GetString("name"), s);
+        Debug.Log("send");
     }
 
     private void SaveData(int s)
