@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using System;
 
 public class Target : MonoBehaviour
 {
-    /// Used to animate and scale the target
     public TargetVisuals visuals;
 
     public UnityAction<Target, bool> OnTargetDied;
@@ -13,7 +11,7 @@ public class Target : MonoBehaviour
     [HideInInspector]
     public TargetData data;
 
-    /// Spawn the target at a given position.
+    // Creer la cible a une certaine position
     public void Respawn(Vector2 pos, TargetData d)
     {
         data = d;
@@ -27,9 +25,7 @@ public class Target : MonoBehaviour
         visuals.Respawn(data);
     }
 
-    /// <summary>
-    /// Despawn the target.
-    /// </summary>
+    //desactive l'objet
     public void Despawn()
     {
         if (gameObject.activeSelf == false)
@@ -38,7 +34,6 @@ public class Target : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    /// Called when the target is clicked.
     public void TargetClicked()
     {
         StopCoroutine("Timer");

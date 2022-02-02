@@ -3,13 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+//Gestion du timer
 public class Timer : MonoBehaviour
 {
     public Text timerText;
-    
-    /// <summary>
-    /// The time of the game round.
-    /// </summary>
+
     public int startTime;
 
     private WaitForSeconds wait = new WaitForSeconds(1);
@@ -17,9 +15,6 @@ public class Timer : MonoBehaviour
 
     public UnityAction OnTimeOut;
 
-    /// <summary>
-    /// Reset the timer, called at new game.
-    /// </summary>
     public void NewGame()
     {
         time = startTime;
@@ -27,9 +22,9 @@ public class Timer : MonoBehaviour
         StartCoroutine("StartTimer");
     }
 
-    IEnumerator StartTimer()
+    private IEnumerator StartTimer()
     {
-        while(true)
+        while (true)
         {
             yield return wait;
             time--;

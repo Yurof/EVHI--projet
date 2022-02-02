@@ -1,23 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
 using System.IO;
-using System;
 
+//
 public class Login : MonoBehaviour
 {
     public GameObject playerName;
     public GameObject alertName;
 
-    // Start is called before the first frame update
     private void Start()
     {
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
@@ -30,17 +25,17 @@ public class Login : MonoBehaviour
     {
         string text = playerName.GetComponent<TMP_InputField>().text;
 
-        if (!string.IsNullOrEmpty(text) && text != "nul")
+        if (!string.IsNullOrEmpty(text) && text != "nul") //verifie que le pseudo est correct
         {
             PlayerPrefs.SetString("name", text);
 
             if (File.Exists(Application.persistentDataPath + "/" + text + ".dat"))
             {
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene(2);//profil présent, enclenche le jeu
             }
             else
             {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(1); //pas de profil, enclenche le tutoriel
             }
         }
         else

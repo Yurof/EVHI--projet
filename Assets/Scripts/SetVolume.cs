@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+//slider du volume
 public class SetVolume : MonoBehaviour
 {
     public AudioMixer mixer;

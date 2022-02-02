@@ -2,9 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using System;
 using DIG.GBLXAPI;
-using TinCan;
 
 public class Score : MonoBehaviour
 {
@@ -32,6 +30,7 @@ public class Score : MonoBehaviour
 
     private void Awake()
     {
+        //charge les données des utilisateurs
         GameData gd = gameSave.Load();
         if (gd != null)
         {
@@ -59,6 +58,7 @@ public class Score : MonoBehaviour
         }
     }
 
+    //affiche les scores
     private void Start()
     {
         ShowTopScores();
@@ -106,23 +106,12 @@ public class Score : MonoBehaviour
 
         GBLXAPI.Init(new GBLConfig());
         GBLXAPI.debugMode = true;
-
-        /*GBL_Interface.playerName = PlayerPrefs.GetString("name");*/
-
         GBLXAPI.Timers.ResetSlot(0);
 
-        Debug.Log(PlayerPrefs.GetString("name"));
         GBL_Interface.userUUID = PlayerPrefs.GetString("name");
-        Debug.Log(GBL_Interface.userUUID);
-        //statementText.text = "zzzz";
-        //Debug.Log(scoreText.text);
-        Debug.Log("Mean time kill : " + scoremeanTimeKill);
-        Debug.Log("accuracy : " + accuracy);
-        Debug.Log("score : " + s);
         GBL_Interface.SendMeanTimeKill(PlayerPrefs.GetString("name"), scoremeanTimeKill);
         GBL_Interface.SendAccuracy(PlayerPrefs.GetString("name"), accuracy);
         GBL_Interface.SendScore(PlayerPrefs.GetString("name"), s);
-        Debug.Log("send");
     }
 
     private void SaveData(int s)
@@ -132,6 +121,7 @@ public class Score : MonoBehaviour
         ShowTopScores();
     }
 
+    //Affichage des scores mise a jour
     private void ShowTopScores()
     {
         topScoresText[0].text = Mathf.Max(ListScore.ToArray()).ToString();

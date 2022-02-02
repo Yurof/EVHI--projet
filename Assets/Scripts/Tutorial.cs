@@ -17,7 +17,6 @@ public class Tutorial : MonoBehaviour
     private float offsetx = 0;
     private float offsety = 0;
 
-    // Start is called before the first frame update
     private void Start()
     {
         Welcome.text = "Bienvenue " + PlayerPrefs.GetString("name");
@@ -27,12 +26,6 @@ public class Tutorial : MonoBehaviour
         listSpawn.Add(new Vector2(7.19f, -3.3f));
         listSpawn.Add(new Vector2(-7.19f, -3.3f));
         listSpawn.Add(new Vector2(0f, 3.68f));
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        /* Invoke("NewGame", 2);*/
     }
 
     public void WelcomeFunction()
@@ -62,10 +55,6 @@ public class Tutorial : MonoBehaviour
         if (i < listSpawn.Count)
         {
             targetcat.transform.position = listSpawn[i];
-            /*            if (i == 0)
-                        {
-                            Destroy(Welcome);
-                        }*/
             if (i == 1)
             {
                 targetcat.GetComponent<SpriteRenderer>().flipX = true;

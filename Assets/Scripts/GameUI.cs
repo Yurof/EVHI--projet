@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//gestion des UI
 public class GameUI : MonoBehaviour
 {
     public GameObject playCanvas;

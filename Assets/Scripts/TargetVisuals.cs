@@ -8,6 +8,7 @@ public class TargetVisuals : MonoBehaviour
 
     public RectTransform movingImage;
 
+    //gère le visuel des cibles
     public void Respawn(TargetData data)
     {
         Color initialColor = movingImage.GetComponent<Image>().color;
@@ -18,6 +19,7 @@ public class TargetVisuals : MonoBehaviour
         StartCoroutine("Animate", data);
     }
 
+    //rend la cible transparente dans le temps
     private IEnumerator Animate(TargetData data)
     {
         Color initialColor = movingImage.GetComponent<Image>().color;
@@ -29,7 +31,6 @@ public class TargetVisuals : MonoBehaviour
             elapsedTime += Time.deltaTime;
             movingImage.GetComponent<Image>().color = Color.Lerp(initialColor, targetColor, elapsedTime / data.timeOnScreen);
             yield return null;
-            /*yield return new WaitForEndOfFrame();*/
         }
     }
 }

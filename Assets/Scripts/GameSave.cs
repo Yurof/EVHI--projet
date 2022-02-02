@@ -4,9 +4,6 @@ using System.IO;
 using System;
 using UnityEngine.UI;
 
-using DIG.GBLXAPI;
-using TinCan;
-
 [Serializable]
 public class GameData
 {
@@ -19,6 +16,7 @@ public class GameSave
 {
     public Text statementText;
 
+    //sauvegarder les données
     public void Save(int[] scores, float[] accuracies, float[] meantimekills)
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -33,6 +31,7 @@ public class GameSave
         file.Close();
     }
 
+    //charge les données
     public GameData Load()
     {
         if (File.Exists(Application.persistentDataPath + "/" + PlayerPrefs.GetString("name") + ".dat"))
