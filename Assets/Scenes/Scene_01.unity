@@ -1233,7 +1233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1708405945}
-  startTime: 30
+  startTime: 60
 --- !u!114 &428353676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2153,7 +2153,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: d50825c0a9947ac408c03048cece0b4c, type: 3}
+    m_Font: {fileID: 12800000, guid: 4ca0311a57a3dc440bd497c7638e106a, type: 3}
     m_FontSize: 140
     m_FontStyle: 0
     m_BestFit: 0

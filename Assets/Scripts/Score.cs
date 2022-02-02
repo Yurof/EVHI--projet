@@ -26,7 +26,7 @@ public class Score : MonoBehaviour
     public float scoremeanTimeKill = 0;
 
     private float accurateThreshold = 80f;
-    private float timeThreshold = 1f;
+    private float timeThreshold = 1.2f;
 
     private void Awake()
     {
@@ -49,7 +49,7 @@ public class Score : MonoBehaviour
 
             if (Queryable.Average(Listmeantimekill.AsQueryable()) < timeThreshold)
             {
-                GameLogic.targetDuration = 1;
+                GameLogic.targetDuration = 1.2f;
             }
             else
             {

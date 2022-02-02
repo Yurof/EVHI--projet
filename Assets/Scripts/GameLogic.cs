@@ -128,7 +128,7 @@ public class GameLogic : MonoBehaviour
                 {
                     Debug.Log("Target size increased");
                 }
-                targetSize = Math.Min(targetSize * 1.5f, targetMaxSize);
+                targetSize = Math.Min(targetSize * 1.1f, targetMaxSize);
             }
         }
     }
@@ -139,7 +139,7 @@ public class GameLogic : MonoBehaviour
         score.NewGame();
         disabledTargets.Clear();
 
-        if (targetSize <= 0.8f && targetDuration <= 1.2f)
+        if (targetSize <= 0.9f && targetDuration <= 1.2f)
         {
             ui.ChangeBackground();
         }
