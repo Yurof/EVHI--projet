@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.tobii.gaming.sdk": {
-      "version": "file:E:/Users/Youssef/Downloads/TobiiUnitySDK_4.1.0",
+      "version": "file:../TobiiUnitySDK_4.1.0",
       "depth": 0,
       "source": "local",
       "dependencies": {}
