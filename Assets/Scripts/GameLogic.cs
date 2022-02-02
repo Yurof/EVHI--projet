@@ -105,7 +105,7 @@ public class GameLogic : MonoBehaviour
             {
                 Debug.Log("Target size decreased");
             }
-            targetSize = Math.Max(targetSize * 0.97f, targetMinSize);
+            targetSize = Math.Max(targetSize * 0.9f, targetMinSize);
         }
         else
         {
@@ -128,7 +128,7 @@ public class GameLogic : MonoBehaviour
                 {
                     Debug.Log("Target size increased");
                 }
-                targetSize = Math.Min(targetSize * 1.8f, targetMaxSize);
+                targetSize = Math.Min(targetSize * 1.5f, targetMaxSize);
             }
         }
     }
@@ -202,6 +202,7 @@ public class GameLogic : MonoBehaviour
         score.UpdateAccurcy(false);
         animatorCombo.SetTrigger("breakerTrigger");
         pointsCombo = 0;
+        targetSize = Math.Min(targetSize * 1.2f, targetMaxSize);
         score.UpdateCombo(pointsCombo);
     }
 }
